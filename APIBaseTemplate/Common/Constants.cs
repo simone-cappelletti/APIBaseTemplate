@@ -1,0 +1,7 @@
+﻿namespace APIBaseTemplate.Common
+{
+    public static class Constants
+    {
+        public const string API_BASE_TEMPLATE_CONNECTIONSTRING_NAME = "APIBaseTemplateDb";
+    }
+}
