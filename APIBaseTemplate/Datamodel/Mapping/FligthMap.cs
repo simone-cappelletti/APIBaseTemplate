@@ -26,6 +26,7 @@ namespace APIBaseTemplate.Datamodel.Mapping
             builder.Property(p => p.DepartureTime).IsRequired();
             builder.Property(p => p.ArrivalTime).IsRequired();
             builder.Property(p => p.Gate).IsRequired();
+            builder.Property(p => p.IsDeleted).IsRequired();
 
             // Keys
             builder.HasOne(p => p.Airline)

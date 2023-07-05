@@ -1,6 +1,8 @@
-﻿namespace APIBaseTemplate.Datamodel.Db
+﻿using APIBaseTemplate.Datamodel.Interfaces;
+
+namespace APIBaseTemplate.Datamodel.Db
 {
-    public class Fligth
+    public class Fligth : IDeletableEntity
     {
         /// <summary>
         /// Fligth id
@@ -50,6 +52,10 @@
         /// Fligth gate
         /// </summary>
         public string Gate { get; set; }
+        /// <summary>
+        /// Support to logical deletion
+        /// </summary>
+        public bool IsDeleted { get; set; }
         /// <summary>
         /// Fligth Services
         /// </summary>

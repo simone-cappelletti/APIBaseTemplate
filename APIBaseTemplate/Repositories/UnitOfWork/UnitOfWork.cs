@@ -3,6 +3,9 @@ using System.Transactions;
 
 namespace APIBaseTemplate.Repositories.UnitOfWork
 {
+    /// <summary>
+    /// Default implementation of unit of work.
+    /// </summary>
     public class UnitOfWork : IUnitOfWork
     {
         // The datacontext
