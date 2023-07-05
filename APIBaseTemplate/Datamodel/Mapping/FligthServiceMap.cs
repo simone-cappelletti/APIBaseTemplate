@@ -1,4 +1,5 @@
 ﻿using APIBaseTemplate.Datamodel.Db;
+using APIBaseTemplate.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -18,7 +19,7 @@ namespace APIBaseTemplate.Datamodel.Mapping
 
             // Columns
             builder.Property(p => p.FligthServiceId).UseIdentityColumn();
-            builder.Property(p => p.PriceType).HasConversion<string>().IsRequired();
+            builder.Property(p => p.PriceType).HasEnumComment().HasConversion<string>().IsRequired();
             builder.Property(p => p.Amout).IsRequired();
             builder.Property(p => p.CurrencyId).IsRequired();
             builder.Property(p => p.FligthId).IsRequired();
