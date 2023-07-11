@@ -1,5 +1,4 @@
-﻿using APIBaseTemplate.Common;
-using APIBaseTemplate.Datamodel;
+﻿using APIBaseTemplate.Datamodel;
 using APIBaseTemplate.Repositories.DataContexts;
 using APIBaseTemplate.Repositories.Repositories;
 using APIBaseTemplate.Repositories.UnitOfWork;
@@ -7,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Text;
 
-namespace APIBaseTemplate.Extensions
+namespace APIBaseTemplate.Common
 {
     public static class Extensions
     {
@@ -23,7 +22,7 @@ namespace APIBaseTemplate.Extensions
                 options.UseSqlServer(configuration.GetConnectionString(Constants.API_BASE_TEMPLATE_CONNECTIONSTRING_NAME));
             });
 
-            serviceCollection.AddScoped<DataContext>(serviceProvider =>
+            serviceCollection.AddScoped(serviceProvider =>
             {
                 var db = serviceProvider.GetService<APIBaseTemplateDbContext>();
                 var result = new DataContext(db);

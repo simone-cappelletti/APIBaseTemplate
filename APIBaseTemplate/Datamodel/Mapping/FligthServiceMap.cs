@@ -1,5 +1,5 @@
-﻿using APIBaseTemplate.Datamodel.Db;
-using APIBaseTemplate.Extensions;
+﻿using APIBaseTemplate.Common;
+using APIBaseTemplate.Datamodel.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
