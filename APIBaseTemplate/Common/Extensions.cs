@@ -1,6 +1,6 @@
 ﻿using APIBaseTemplate.Datamodel;
 using APIBaseTemplate.Repositories.DataContexts;
-using APIBaseTemplate.Repositories.Repositories;
+using APIBaseTemplate.Repositories;
 using APIBaseTemplate.Repositories.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

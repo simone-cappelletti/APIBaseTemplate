@@ -1,7 +1,7 @@
 ﻿using APIBaseTemplate.Repositories.DataContexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace APIBaseTemplate.Repositories.Repositories
+namespace APIBaseTemplate.Repositories
 {
     /// <summary>
     /// Non-typed Repository

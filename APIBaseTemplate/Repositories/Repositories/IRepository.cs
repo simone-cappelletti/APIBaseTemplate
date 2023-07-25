@@ -1,6 +1,6 @@
 ﻿using APIBaseTemplate.Repositories.DataContexts;
 
-namespace APIBaseTemplate.Repositories.Repositories
+namespace APIBaseTemplate.Repositories
 {
     public interface IRepository<TEntity> : IDataContextRepository where TEntity : class
     {
