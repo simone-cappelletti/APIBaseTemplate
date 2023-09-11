@@ -2,10 +2,13 @@
 
 namespace APIBaseTemplate.Repositories.DataContexts
 {
+    /// <summary>
+    /// Concrete implementation of the <see cref="IDataContext"/> interface
+    /// </summary>
     public class DataContext : IDataContext
     {
         /// <summary>
-        /// Entity Framework data context.
+        /// Entity Framework db context.
         /// It can be used to perform some low-level operations
         /// </summary>
         public DbContext DbContext { get; init; }
