@@ -1,4 +1,4 @@
-﻿namespace APIBaseTemplate.Datamodel.Db
+﻿namespace APIBaseTemplate.Datamodel.DbEntities
 {
     public class FligthService
     {

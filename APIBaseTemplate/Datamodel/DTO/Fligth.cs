@@ -1,6 +1,4 @@
-﻿using APIBaseTemplate.Datamodel.Db;
-
-namespace APIBaseTemplate.Datamodel.DTO
+﻿namespace APIBaseTemplate.Datamodel.DTO
 {
     public class Fligth
     {
@@ -59,6 +57,6 @@ namespace APIBaseTemplate.Datamodel.DTO
         /// <summary>
         /// Fligth Services
         /// </summary>
-        public ICollection<Db.FligthService> FligthServices { get; set; }
+        public ICollection<FligthService> FligthServices { get; set; }
     }
 }

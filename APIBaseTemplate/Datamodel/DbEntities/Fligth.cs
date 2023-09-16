@@ -1,6 +1,6 @@
 ﻿using APIBaseTemplate.Datamodel.Interfaces;
 
-namespace APIBaseTemplate.Datamodel.Db
+namespace APIBaseTemplate.Datamodel.DbEntities
 {
     public class Fligth : IDeletableEntity
     {

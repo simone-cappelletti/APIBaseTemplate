@@ -1,4 +1,4 @@
-﻿using APIBaseTemplate.Datamodel.Db;
+﻿using APIBaseTemplate.Datamodel.DbEntities;
 
 namespace APIBaseTemplate.Datamodel.DTO
 {

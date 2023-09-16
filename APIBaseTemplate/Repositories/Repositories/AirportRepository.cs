@@ -1,6 +1,6 @@
 ﻿using APIBaseTemplate.Datamodel.DTO;
 using Microsoft.EntityFrameworkCore;
-using Airport = APIBaseTemplate.Datamodel.Db.Airport;
+using Airport = APIBaseTemplate.Datamodel.DbEntities.Airport;
 
 namespace APIBaseTemplate.Repositories
 {

@@ -1,4 +1,4 @@
-﻿using APIBaseTemplate.Datamodel.Db;
+﻿using APIBaseTemplate.Datamodel.DbEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -1,4 +1,4 @@
-﻿using APIBaseTemplate.Datamodel.Db;
+﻿using APIBaseTemplate.Datamodel.DbEntities;
 using APIBaseTemplate.Repositories;
 using APIBaseTemplate.Repositories.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
