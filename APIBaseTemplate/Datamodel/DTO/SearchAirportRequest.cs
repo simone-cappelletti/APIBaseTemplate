@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using APIBaseTemplate.Common;
 
 namespace APIBaseTemplate.Datamodel.DTO
 {
@@ -17,25 +17,21 @@ namespace APIBaseTemplate.Datamodel.DTO
         /// <summary>
         /// Search on <see cref="Airport.AirportId"/>
         /// </summary>
-        [JsonPropertyName("airportId")]
         public int? AirportId { get; set; }
 
         /// <summary>
         /// Search on <see cref="Airport.Code"/>
         /// </summary>
-        [JsonPropertyName("code")]
-        public string? Code { get; set; }
+        public TextFilter Code { get; set; }
 
         /// <summary>
         /// Search on <see cref="Airport.Name"/>
         /// </summary>
-        [JsonPropertyName("name")]
-        public string? Name { get; set; }
+        public TextFilter Name { get; set; }
 
         /// <summary>
         /// Search on <see cref="Airport.CityId"/>
         /// </summary>
-        [JsonPropertyName("cityId")]
         public int? CityId { get; set; }
     }
 

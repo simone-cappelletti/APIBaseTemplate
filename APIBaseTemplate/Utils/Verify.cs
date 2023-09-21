@@ -40,7 +40,10 @@ namespace APIBaseTemplate.Utils
         }
 
         /// <inheritdoc/>
-        public void Satisfied(bool condition, Func<string?, Exception>? exception = null, [CallerArgumentExpression(nameof(condition))] string? conditionArgument = null)
+        public void Satisfied(
+            bool condition,
+            Func<string?, Exception>? exception = null,
+            [CallerArgumentExpression(nameof(condition))] string? conditionArgument = null)
         {
             if (condition == NotOperatorEnabled)
             {
@@ -149,7 +152,10 @@ namespace APIBaseTemplate.Utils
         }
 
         ///<inheritdoc/>
-        public void StringAllowedMaximumLength(int maximumLength, string? obj, Func<Exception> exception)
+        public void StringAllowedMaximumLength(
+            int maximumLength,
+            string? obj,
+            Func<Exception> exception)
         {
             Satisfied(
                 string.IsNullOrEmpty(obj) ||

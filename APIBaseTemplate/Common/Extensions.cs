@@ -5,6 +5,8 @@ using APIBaseTemplate.Repositories.UnitOfWork;
 using APIBaseTemplate.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Linq.Expressions;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -182,5 +184,156 @@ namespace APIBaseTemplate.Common
                     $"Parameter should be negative. Condition [{assertValueMessage}] not satisfied")
                 );
         }
+    }
+
+    public static class QueryableTextFilterExtensions
+    {
+        /// <summary>
+        /// Apply the Text Filter if not null, using the lambda indicated
+        /// </summary>
+        /// <typeparam name="T">Entity type</typeparam>
+        /// <param name="query">the query to filter</param>
+        /// <param name="filterOperator"></param>
+        /// <param name="isNull"> Where isNull predicate</param>
+        /// <param name="equalTo">Where equalTo predicate</param>
+        /// <param name="like">Where like predicate</param>
+        /// <param name="startsWith">Where startsWith predicate</param>
+        /// <param name="endsWith">Where endsWith predicate</param>
+        /// <param name="lessThan">Where lessThan predicate</param>
+        /// <param name="greaterThan">Where greaterThan predicate</param>
+        /// <param name="inValues">Where valuesIn predicate</param>
+        /// <returns></returns>
+        public static IQueryable<T> WhereTextFilter<T>(this IQueryable<T> query, EnmTextFilterOperator filterOperator,
+            Expression<Func<T, bool>>? isNull,
+            Expression<Func<T, bool>> equalTo,
+            Expression<Func<T, bool>> like,
+            Expression<Func<T, bool>> startsWith,
+            Expression<Func<T, bool>> endsWith,
+            Expression<Func<T, bool>> lessThan,
+            Expression<Func<T, bool>> greaterThan,
+            Expression<Func<T, bool>>? inValues)
+        {
+            query = (filterOperator) switch
+            {
+                EnmTextFilterOperator.IsNull =>
+                    isNull != null ?
+                    query.Where(isNull) :
+                    throw new ArgumentNullException(
+                        nameof(isNull),
+                        $"Operator {filterOperator} was expected"),
+
+                EnmTextFilterOperator.IsNotNull =>
+                    isNull != null ?
+                    query.Where(isNull.Not()) :
+                    throw new ArgumentNullException(
+                        nameof(isNull),
+                        $"Operator {filterOperator} was expected"),
+
+                EnmTextFilterOperator.Contains =>
+                    like != null ?
+                    query.Where(like) :
+                    throw new ArgumentNullException(
+                        nameof(like),
+                        $"Operator {filterOperator} was expected"),
+
+                EnmTextFilterOperator.NotContains =>
+                    like != null ?
+                    query.Where(like.Not()) :
+                    throw new ArgumentNullException(
+                        nameof(like),
+                        $"Operator {filterOperator} was expected"),
+
+                EnmTextFilterOperator.StartsWith =>
+                    startsWith != null ?
+                    query.Where(startsWith) :
+                    throw new ArgumentNullException(
+                        nameof(startsWith),
+                        $"Operator {filterOperator} was expected"),
+
+                EnmTextFilterOperator.NotStartsWith =>
+                    startsWith != null ?
+                    query.Where(startsWith.Not()) :
+                    throw new ArgumentNullException(
+                        nameof(startsWith),
+                        $"Operator {filterOperator} was expected"),
+
+                EnmTextFilterOperator.EndsWith =>
+                    endsWith != null ?
+                    query.Where(endsWith) :
+                    throw new ArgumentNullException(
+                        nameof(endsWith),
+                        $"Operator {filterOperator} was expected"),
+
+                EnmTextFilterOperator.NotEndsWith =>
+                    endsWith != null ?
+                    query.Where(endsWith.Not()) :
+                    throw new ArgumentNullException(
+                        nameof(endsWith),
+                        $"Operator {filterOperator} was expected"),
+
+                EnmTextFilterOperator.EqualTo =>
+                    equalTo != null ?
+                    query.Where(equalTo) :
+                    throw new ArgumentNullException(
+                        nameof(equalTo),
+                        $"Operator {filterOperator} was expected"),
+
+                EnmTextFilterOperator.NotEqualTo =>
+                    equalTo != null ?
+                    query.Where(equalTo.Not()) :
+                    throw new ArgumentNullException(
+                        nameof(equalTo),
+                        $"Operator {filterOperator} was expected"),
+
+                EnmTextFilterOperator.LessThan =>
+                    lessThan != null ?
+                    query.Where(lessThan) :
+                    throw new ArgumentNullException(
+                        nameof(lessThan),
+                        $"Operator {filterOperator} was expected"),
+
+                // 'x <= 5' it's the same thing as '!(x > 5)'
+                EnmTextFilterOperator.LessThanEqual =>
+                    greaterThan != null ?
+                    query.Where(greaterThan.Not()) :
+                    throw new ArgumentNullException(
+                        nameof(greaterThan),
+                        $"Operator {greaterThan} was expected (lte operator use gt operator)"),
+
+                EnmTextFilterOperator.GreaterThan =>
+                    greaterThan != null ?
+                    query.Where(greaterThan) :
+                    throw new ArgumentNullException(
+                        nameof(greaterThan),
+                        $"Operator {filterOperator} was expected"),
+
+                // 'x >= 5' it's the same thing as '!(x < 5)'
+                EnmTextFilterOperator.GreaterThanEqual =>
+                    lessThan != null ?
+                    query.Where(lessThan.Not()) :
+                    throw new ArgumentNullException(
+                        nameof(lessThan),
+                        $"Operator {lessThan} was expected (gte operator use lt operator)"),
+
+                EnmTextFilterOperator.InValues =>
+                    inValues != null ?
+                    query.Where(inValues) :
+                    throw new ArgumentNullException(
+                        nameof(inValues),
+                        $"Operator {filterOperator} was expected"),
+
+                EnmTextFilterOperator.NotInValues =>
+                    inValues != null ?
+                    query.Where(inValues.Not()) :
+                    throw new ArgumentNullException(
+                        nameof(inValues),
+                        $"Operator {filterOperator} was expected"),
+
+                _ => throw new ArgumentOutOfRangeException(
+                    $"Unsupported value {filterOperator}"), // valore non previsto
+            };
+            return query;
+        }
+
     }
 }

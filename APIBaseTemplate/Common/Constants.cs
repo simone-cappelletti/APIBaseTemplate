@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace APIBaseTemplate.Common
+﻿namespace APIBaseTemplate.Common
 {
     public static class Constants
     {
