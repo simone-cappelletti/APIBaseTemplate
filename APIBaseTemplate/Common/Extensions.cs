@@ -6,7 +6,6 @@ using APIBaseTemplate.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Linq.Expressions;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -335,5 +334,50 @@ namespace APIBaseTemplate.Common
             return query;
         }
 
+    }
+
+    public static class QueryableExtensionsOrderBy
+    {
+        /// <summary>
+        /// Apply to the query the list of orderby given in the oderBy parameter.
+        /// If the list is empty, apply a default sort order.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="filter"></param>
+        /// <param name="orderBy"></param>
+        /// <param name="defaultOrderBy"></param>
+        /// <returns></returns>
+        public static IOrderedQueryable<TSource> OrderBy<TSource>(
+            this IQueryable<TSource> query,
+            OrderByFilter<TSource> filter,
+            IEnumerable<OrderByOption> orderBy,
+            Func<IQueryable<TSource>,
+            IOrderedQueryable<TSource>> defaultOrderBy)
+                => filter.OrderBy(query, orderBy, defaultOrderBy);
+    }
+
+    public static class QueryableExtensionsPagination
+    {
+        /// <summary>
+        /// Apply Skip/Take stuff using a <see cref="IPaginated"/> filter
+        /// </summary>
+        /// <typeparam name="TSource">the Entity Type</typeparam>
+        /// <param name="query">the query</param>
+        /// <param name="paginationOptions">pagination options</param>
+        /// <returns>A paginated IQueryable version of the source or the original query if page index/page size not specified</returns>
+        public static IQueryable<TSource> ApplyPagination<TSource>(this IQueryable<TSource> query, IPaginated paginationOptions)
+        {
+            if (paginationOptions.PageIndex.HasValue &&
+                paginationOptions.PageIndex.Value >= 0 &&
+                paginationOptions.PageSize > 0)
+            {
+                return query.Skip(paginationOptions.PageIndex.Value * paginationOptions.PageSize)
+                    .Take(paginationOptions.PageSize);
+            }
+            else
+            {
+                return query;
+            }
+        }
     }
 }
