@@ -1,4 +1,5 @@
-﻿using APIBaseTemplate.Datamodel;
+﻿using APIBaseTemplate.Common;
+using APIBaseTemplate.Datamodel;
 using APIBaseTemplate.Repositories;
 using APIBaseTemplate.Repositories.DataContexts;
 using APIBaseTemplate.Repositories.UnitOfWork;
@@ -11,7 +12,7 @@ using System.Text;
 
 namespace APIBaseTemplate.Common
 {
-    public static class Extensions
+    public static class CommonExtensions
     {
         /// <summary>
         /// Add the base db context.
@@ -105,7 +106,10 @@ namespace APIBaseTemplate.Common
         /// <param name="value">value to be controlled</param>
         /// <param name="valueMessage">value message</param>
         /// <exception cref="ArgumentException"></exception>
-        public static void UnspecifiedKind(this IVerify verify, DateTime value, [CallerArgumentExpression("value")] string? valueMessage = null)
+        public static void UnspecifiedKind(
+            this IVerify verify,
+            DateTime value,
+            [CallerArgumentExpression(nameof(value))] string? valueMessage = null)
         {
             if (verify is null)
             {
@@ -127,7 +131,10 @@ namespace APIBaseTemplate.Common
         /// <param name="value">value to be controlled</param>
         /// <param name="valueMessage">value message</param>
         /// <exception cref="ArgumentException"></exception>
-        public static void UtcKind(this IVerify verify, DateTime value, [CallerArgumentExpression("value")] string? valueMessage = null)
+        public static void UtcKind(
+            this IVerify verify,
+            DateTime value,
+            [CallerArgumentExpression(nameof(value))] string? valueMessage = null)
         {
             if (verify is null)
             {
@@ -149,7 +156,10 @@ namespace APIBaseTemplate.Common
         /// <param name="value">value to be controlled</param>
         /// <param name="valueMessage">value message</param>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public static void Positive(this IVerify verify, int value, [CallerArgumentExpression(nameof(value))] string? valueMessage = null)
+        public static void Positive(
+            this IVerify verify,
+            int value,
+            [CallerArgumentExpression(nameof(value))] string? valueMessage = null)
         {
             if (verify is null)
             {
@@ -170,7 +180,10 @@ namespace APIBaseTemplate.Common
         /// <param name="value">value to be controlled</param>
         /// <param name="valueMessage">value message</param>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public static void Negative(this IVerify verify, int value, [CallerArgumentExpression(nameof(value))] string? valueMessage = null)
+        public static void Negative(
+            this IVerify verify,
+            int value,
+            [CallerArgumentExpression(nameof(value))] string? valueMessage = null)
         {
             if (verify is null)
             {
@@ -185,7 +198,7 @@ namespace APIBaseTemplate.Common
         }
     }
 
-    public static class QueryableTextFilterExtensions
+    public static class QueryableExtensions
     {
         /// <summary>
         /// Apply the Text Filter if not null, using the lambda indicated
@@ -202,7 +215,9 @@ namespace APIBaseTemplate.Common
         /// <param name="greaterThan">Where greaterThan predicate</param>
         /// <param name="inValues">Where valuesIn predicate</param>
         /// <returns></returns>
-        public static IQueryable<T> WhereTextFilter<T>(this IQueryable<T> query, EnmTextFilterOperator filterOperator,
+        public static IQueryable<T> WhereTextFilter<T>(
+            this IQueryable<T> query,
+            EnmTextFilterOperator filterOperator,
             Expression<Func<T, bool>>? isNull,
             Expression<Func<T, bool>> equalTo,
             Expression<Func<T, bool>> like,
@@ -334,12 +349,32 @@ namespace APIBaseTemplate.Common
             return query;
         }
 
-    }
-
-    public static class QueryableExtensionsOrderBy
-    {
         /// <summary>
-        /// Apply to the query the list of orderby given in the oderBy parameter.
+        /// Apply Skip/Take stuff using a <see cref="IPaginated"/> filter
+        /// </summary>
+        /// <typeparam name="TSource">the Entity Type</typeparam>
+        /// <param name="query">the query</param>
+        /// <param name="paginationOptions">pagination options</param>
+        /// <returns>A paginated IQueryable version of the source or the original query if page index/page size not specified</returns>
+        public static IQueryable<TSource> ApplyPagination<TSource>(
+            this IQueryable<TSource> query,
+            IPaginated paginationOptions)
+        {
+            if (paginationOptions.PageIndex.HasValue &&
+                paginationOptions.PageIndex.Value >= 0 &&
+                paginationOptions.PageSize > 0)
+            {
+                return query.Skip(paginationOptions.PageIndex.Value * paginationOptions.PageSize)
+                    .Take(paginationOptions.PageSize);
+            }
+            else
+            {
+                return query;
+            }
+        }
+
+        /// <summary>
+        /// Apply to the query the list of orderby given in the orderBy parameter.
         /// If the list is empty, apply a default sort order.
         /// </summary>
         /// <param name="query"></param>
@@ -356,27 +391,36 @@ namespace APIBaseTemplate.Common
                 => filter.OrderBy(query, orderBy, defaultOrderBy);
     }
 
-    public static class QueryableExtensionsPagination
+    public static class IRepositoryExtensions
     {
         /// <summary>
-        /// Apply Skip/Take stuff using a <see cref="IPaginated"/> filter
+        /// It returns the only element that satisfies the predicate or exception if specified
         /// </summary>
-        /// <typeparam name="TSource">the Entity Type</typeparam>
-        /// <param name="query">the query</param>
-        /// <param name="paginationOptions">pagination options</param>
-        /// <returns>A paginated IQueryable version of the source or the original query if page index/page size not specified</returns>
-        public static IQueryable<TSource> ApplyPagination<TSource>(this IQueryable<TSource> query, IPaginated paginationOptions)
+        /// <param name="predicate">search filter</param>
+        /// <param name="onException">
+        /// callback to invoke the specified exception or the default exception InvalidOperationException
+        /// </param>
+        /// <returns>single element</returns>
+        public static TEntity Single<TEntity>(
+            this IRepository<TEntity> repository,
+            Expression<Func<TEntity, bool>> predicate,
+            Func<InvalidOperationException, BaseException>? onException = null)
+            where TEntity : class
         {
-            if (paginationOptions.PageIndex.HasValue &&
-                paginationOptions.PageIndex.Value >= 0 &&
-                paginationOptions.PageSize > 0)
+            try
             {
-                return query.Skip(paginationOptions.PageIndex.Value * paginationOptions.PageSize)
-                    .Take(paginationOptions.PageSize);
+                return repository.Query().Single(predicate);
             }
-            else
+            catch (InvalidOperationException ex)
             {
-                return query;
+                if (onException == null)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw onException(ex);
+                }
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using APIBaseTemplate.Common;
+using APIBaseTemplate.Common.Exceptions;
 using APIBaseTemplate.Datamodel.DTO;
 using APIBaseTemplate.Utils;
 using Microsoft.EntityFrameworkCore;
@@ -9,10 +10,16 @@ namespace APIBaseTemplate.Repositories
     public interface IAirlineRepository : IRepository<Airline>
     {
         /// <summary>
-        /// Perform a search of <see cref="Airline"/> items using <paramref name="filter"/>
+        /// It performs a search of <see cref="Airline"/> items using <paramref name="filter"/>
         /// </summary>
         /// <param name="filter"></param>
         IQueryable<Airline> Get(SearchAirlineRequest filter);
+
+        /// <summary>
+        /// It deletes a <see cref="Airline"/> by id.
+        /// </summary>
+        /// <param name="airlineId"></param>
+        public void DeleteById(int airlineId);
     }
 
     public class AirlineRepository : BaseRepository<Airline>, IAirlineRepository
@@ -24,6 +31,7 @@ namespace APIBaseTemplate.Repositories
             _logger = logger;
         }
 
+        /// <inheritdoc/>
         public IQueryable<Airline> Get(SearchAirlineRequest request)
         {
             Verify.IsNot.Null(request, nameof(request));
@@ -34,6 +42,22 @@ namespace APIBaseTemplate.Repositories
             query = AddIncludes(query, request.Options);
 
             return query;
+        }
+
+        /// <inheritdoc/>
+        public void DeleteById(int airlineId)
+        {
+            // Check input
+            Verify.Is.Positive(airlineId, nameof(airlineId));
+
+            // Retrieve entity
+            var entityToDelete = this.Single(
+                i => i.AirlineId == airlineId,
+                ioEx => throw new AirlineSingleException(airlineId));
+
+            _logger.LogInformation($"AirlineId deleted {airlineId}");
+
+            Delete(entityToDelete);
         }
 
         private IQueryable<Airline> ApplyFilters(IQueryable<Airline> query, SearchAirlineFilters filters)
@@ -62,8 +86,7 @@ namespace APIBaseTemplate.Repositories
                     endsWith: x => EF.Functions.Like(x.Code.ToUpper(), $"%{text}"),
                     lessThan: x => x.Code.ToUpper().CompareTo(text) < 0,
                     greaterThan: x => x.Code.ToUpper().CompareTo(text) > 0,
-                    inValues: null // this field doesn't support this operator
-                    );
+                    inValues: null);
             }
 
             // Name
@@ -79,8 +102,7 @@ namespace APIBaseTemplate.Repositories
                     endsWith: x => EF.Functions.Like(x.Name.ToUpper(), $"%{text}"),
                     lessThan: x => x.Name.ToUpper().CompareTo(text) < 0,
                     greaterThan: x => x.Name.ToUpper().CompareTo(text) > 0,
-                    inValues: null // this field doesn't support this operator
-                    );
+                    inValues: null);
             }
 
             // RegionId

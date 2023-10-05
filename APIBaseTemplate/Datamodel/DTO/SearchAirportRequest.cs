@@ -1,4 +1,5 @@
 ﻿using APIBaseTemplate.Common;
+using APIBaseTemplate.Common.Requests;
 
 namespace APIBaseTemplate.Datamodel.DTO
 {
@@ -7,6 +8,7 @@ namespace APIBaseTemplate.Datamodel.DTO
     /// </summary>
     public class SearchAirportRequest : SearchRequest<SearchAirportFilters, SearchAirportOptions>
     {
+
     }
 
     /// <summary>

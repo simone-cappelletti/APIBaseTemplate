@@ -1,4 +1,5 @@
 ﻿using APIBaseTemplate.Common;
+using APIBaseTemplate.Common.Exceptions;
 using APIBaseTemplate.Datamodel.DTO;
 using APIBaseTemplate.Utils;
 using Microsoft.EntityFrameworkCore;
@@ -9,10 +10,16 @@ namespace APIBaseTemplate.Repositories
     public interface IAirportRepository : IRepository<Airport>
     {
         /// <summary>
-        /// Perform a search of <see cref="Airport"/> items using <paramref name="filter"/>
+        /// It erforms a search of <see cref="Airport"/> items using <paramref name="filter"/>
         /// </summary>
         /// <param name="filter"></param>
         IQueryable<Airport> Get(SearchAirportRequest filter);
+
+        /// <summary>
+        /// It deletes a <see cref="Airport"/> by id.
+        /// </summary>
+        /// <param name="airportId"></param>
+        public void DeleteById(int airportId);
     }
 
     public class AirportRepository : BaseRepository<Airport>, IAirportRepository
@@ -24,6 +31,7 @@ namespace APIBaseTemplate.Repositories
             _logger = logger;
         }
 
+        /// <inheritdoc/>
         public IQueryable<Airport> Get(SearchAirportRequest request)
         {
             Verify.IsNot.Null(request, nameof(request));
@@ -36,10 +44,28 @@ namespace APIBaseTemplate.Repositories
             return query;
         }
 
+        /// <inheritdoc/>
+        public void DeleteById(int airportId)
+        {
+            // Check input
+            Verify.Is.Positive(airportId, nameof(airportId));
+
+            // Retrieve entity
+            var entityToDelete = this.Single(
+                i => i.AirportId == airportId,
+                ioEx => throw new AirportSingleException(airportId));
+
+            _logger.LogInformation($"AirportId deleted {airportId}");
+
+            Delete(entityToDelete);
+        }
+
         private IQueryable<Airport> ApplyFilters(IQueryable<Airport> query, SearchAirportFilters filters)
         {
             if (filters == null)
+            {
                 return query;
+            }
 
             var sanitizeOptions = EnmSimpleTextFilterSanitize.RemovePercent | EnmSimpleTextFilterSanitize.Trim | EnmSimpleTextFilterSanitize.ToUpper;
 
@@ -62,8 +88,7 @@ namespace APIBaseTemplate.Repositories
                     endsWith: x => EF.Functions.Like(x.Code.ToUpper(), $"%{text}"),
                     lessThan: x => x.Code.ToUpper().CompareTo(text) < 0,
                     greaterThan: x => x.Code.ToUpper().CompareTo(text) > 0,
-                    inValues: null // this field doesn't support this operator
-                    );
+                    inValues: null);
             }
 
             // Name
@@ -79,8 +104,7 @@ namespace APIBaseTemplate.Repositories
                     endsWith: x => EF.Functions.Like(x.Name.ToUpper(), $"%{text}"),
                     lessThan: x => x.Name.ToUpper().CompareTo(text) < 0,
                     greaterThan: x => x.Name.ToUpper().CompareTo(text) > 0,
-                    inValues: null // this field doesn't support this operator
-                    );
+                    inValues: null);
             }
 
             // CityId
@@ -95,7 +119,9 @@ namespace APIBaseTemplate.Repositories
         private IQueryable<Airport> AddIncludes(IQueryable<Airport> query, SearchAirportOptions options)
         {
             if (options == null)
+            {
                 return query;
+            }
 
             query = query.Include(x => x.City);
 

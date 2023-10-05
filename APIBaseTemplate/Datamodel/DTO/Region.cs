@@ -5,7 +5,7 @@
         /// <summary>
         /// Regiond id
         /// </summary>
-        public int RegionId { get; set; }
+        public int? RegionId { get; set; }
         /// <summary>
         /// Region name
         /// </summary>

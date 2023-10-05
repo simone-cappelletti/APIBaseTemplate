@@ -1,4 +1,5 @@
-﻿using APIBaseTemplate.Datamodel.DTO;
+﻿using APIBaseTemplate.Common;
+using APIBaseTemplate.Datamodel.DTO;
 using APIBaseTemplate.Repositories;
 using APIBaseTemplate.Repositories.UnitOfWork;
 
@@ -14,7 +15,7 @@ namespace APIBaseTemplate.Services
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        List<Airline> Get(SearchAirlineRequest request);
+        PagedResult<Airline> Get(SearchAirlineRequest request);
 
         /// <summary>
         /// Retrieve specific <see cref="Airline"/> by <paramref name="airlineId"/>
@@ -51,6 +52,12 @@ namespace APIBaseTemplate.Services
         /// </summary>
         /// <param name="airlineId"></param>
         void Delete(int airlineId);
+
+        /// <summary>
+        /// Available sorting parameters
+        /// </summary>
+        /// <returns></returns>
+        string[] GetSortingParameters();
     }
 
     /// <summary>
@@ -72,6 +79,7 @@ namespace APIBaseTemplate.Services
             _airlineRepository = airlineRepository;
         }
 
+        /// <inheritdoc/>
         public Airline Create(Airline airline)
         {
             _logger.LogTrace($"{nameof(AirlineBusiness)}.{nameof(Create)}({airline})");
@@ -91,26 +99,37 @@ namespace APIBaseTemplate.Services
             return null;
         }
 
+        /// <inheritdoc/>
         public void Delete(int airlineId)
         {
             throw new NotImplementedException();
         }
 
-        public List<Airline> Get(SearchAirlineRequest request)
+        /// <inheritdoc/>
+        public PagedResult<Airline> Get(SearchAirlineRequest request)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public Airline GetById(int airlineId)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
+        public string[] GetSortingParameters()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public Airline Save(Airline airline)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public Airline Update(Airline airline)
         {
             throw new NotImplementedException();

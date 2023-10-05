@@ -1,6 +1,7 @@
 ﻿using APIBaseTemplate.Datamodel.DTO;
 using APIBaseTemplate.Repositories.UnitOfWork;
 using APIBaseTemplate.Repositories;
+using APIBaseTemplate.Common;
 
 namespace APIBaseTemplate.Services
 {
@@ -14,7 +15,7 @@ namespace APIBaseTemplate.Services
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        List<Airport> Get(SearchAirportRequest request);
+        PagedResult<Airport> Get(SearchAirportRequest request);
 
         /// <summary>
         /// Retrieve specific <see cref="Airport"/> by <paramref name="airportId"/>
@@ -51,6 +52,12 @@ namespace APIBaseTemplate.Services
         /// </summary>
         /// <param name="airportId"></param>
         void Delete(int airportId);
+
+        /// <summary>
+        /// Available sorting parameters
+        /// </summary>
+        /// <returns></returns>
+        string[] GetSortingParameters();
     }
 
     /// <summary>
@@ -72,6 +79,7 @@ namespace APIBaseTemplate.Services
             _airportRepository = airportRepository;
         }
 
+        /// <inheritdoc/>
         public Airport Create(Airport airport)
         {
             _logger.LogTrace($"{nameof(AirportBusiness)}.{nameof(Create)}({airport})");
@@ -91,26 +99,37 @@ namespace APIBaseTemplate.Services
             return null;
         }
 
+        /// <inheritdoc/>
         public void Delete(int airportId)
         {
             throw new NotImplementedException();
         }
 
-        public List<Airport> Get(SearchAirportRequest request)
+        /// <inheritdoc/>
+        public PagedResult<Airport> Get(SearchAirportRequest request)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public Airport GetById(int airportId)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
+        public string[] GetSortingParameters()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public Airport Save(Airport airport)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public Airport Update(Airport airport)
         {
             throw new NotImplementedException();

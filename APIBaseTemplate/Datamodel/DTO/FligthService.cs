@@ -7,7 +7,7 @@ namespace APIBaseTemplate.Datamodel.DTO
         /// <summary>
         /// Flight service id
         /// </summary>
-        public int FligthServiceId { get; set; }
+        public int? FligthServiceId { get; set; }
         /// <summary>
         /// Flight service type
         /// </summary>

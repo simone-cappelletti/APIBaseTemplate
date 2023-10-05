@@ -1,4 +1,5 @@
 ﻿using APIBaseTemplate.Common;
+using APIBaseTemplate.Common.Requests;
 
 namespace APIBaseTemplate.Datamodel.DTO
 {
