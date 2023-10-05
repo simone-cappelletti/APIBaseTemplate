@@ -47,9 +47,14 @@ namespace APIBaseTemplate.Utils
                 // Creating
 
                 // Name must be unique
-                _ = _regionRepository.Single(
+                var duplicate = _regionRepository.SingleOrDefault(
                     x => x.Name == region.Name,
                     ioEx => throw new RegionDuplicateException(nameof(region.Name), region.Name));
+
+                if (duplicate != null)
+                {
+                    throw new RegionDuplicateException(nameof(region.Name), region.Name);
+                }
             }
             else
             {

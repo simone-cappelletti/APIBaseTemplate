@@ -423,5 +423,36 @@ namespace APIBaseTemplate.Common
                 }
             }
         }
+
+        /// <summary>
+        /// Return single element that satisfy the predicate or null
+        /// </summary>
+        /// <param name="predicate">search filter</param>
+        /// <param name="onException">
+        /// callback to invoke the specified exception or the default exception InvalidOperationException
+        /// </param>
+        /// <returns>single element</returns>
+        public static TEntity? SingleOrDefault<TEntity>(
+            this IRepository<TEntity> repository,
+            Expression<Func<TEntity, bool>> predicate,
+            Func<InvalidOperationException, BaseException>? onException = null)
+            where TEntity : class
+        {
+            try
+            {
+                return repository.Query().SingleOrDefault(predicate);
+            }
+            catch (InvalidOperationException ex)
+            {
+                if (onException == null)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw onException(ex);
+                }
+            }
+        }
     }
 }

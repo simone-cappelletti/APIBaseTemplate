@@ -169,7 +169,7 @@ namespace APIBaseTemplate.Services
             {
                 var result = new PagedResult<Region>();
 
-                using (var unit = _uof.Get().BoundTo(_regionRepository))
+                using (var unit = _uof.Get().BoundTo(_regionRepository).InTransaction())
                 {
                     var query = _regionRepository.Get(request);
 
@@ -177,7 +177,7 @@ namespace APIBaseTemplate.Services
                     query = query.OrderBy(
                         OrderByFilter,
                         request.Sortings,
-                        defaultOrderBy: q => q.OrderBy(x => x.Name));
+                        defaultOrderBy: q => q.OrderBy(x => x.RegionId));
                     result.Sortings = request.Sortings;
 
                     // Total count
@@ -220,7 +220,7 @@ namespace APIBaseTemplate.Services
                     }
                 };
 
-                using (var unit = _uof.Get().BoundTo(_regionRepository))
+                using (var unit = _uof.Get().BoundTo(_regionRepository).InTransaction())
                 {
                     // Retrive entity
                     var query = _regionRepository.Get(request);
