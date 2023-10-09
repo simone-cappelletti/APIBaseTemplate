@@ -38,8 +38,8 @@ namespace APIBaseTemplate.Repositories.Repositories
 
             IQueryable<Region> query = this.DbContext.Set<Region>();
 
-            query = ApplyFilters(query, request.Filters);
             query = AddIncludes(query, request.Options);
+            query = ApplyFilters(query, request.Filters);
 
             return query;
         }
@@ -96,11 +96,6 @@ namespace APIBaseTemplate.Repositories.Repositories
 
         private IQueryable<Region> AddIncludes(IQueryable<Region> query, SearchRegionOptions options)
         {
-            if (options == null)
-            {
-                return query;
-            }
-
             return query;
         }
     }
