@@ -150,6 +150,7 @@ namespace APIBaseTemplate.Services
             catch (BaseException baseExc)
             {
                 baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(regionId), regionId);
+
                 throw baseExc;
             }
             catch (Exception ex)
@@ -270,7 +271,51 @@ namespace APIBaseTemplate.Services
         /// <inheritdoc/>
         public Region Update(Region region)
         {
-            throw new NotImplementedException();
+            // Check Input
+            Verify.IsNot.Null(region);
+
+            _logger.LogTrace($"{nameof(RegionBusiness)}.{nameof(Update)}({region})");
+
+            try
+            {
+                var result = new Region();
+
+                using (var unit = _uof.Get().BoundTo(_regionRepository).InTransaction())
+                {
+                    // Retrieve db item to update
+                    var regionToUpdate = _regionRepository.Single(
+                        x => x.RegionId == region.RegionId.Value,
+                        ioEx => throw new RegionSingleException(region.RegionId.Value));
+
+                    // Update item
+                    Mappers.Region.ToDb(region, regionToUpdate);
+
+                    _regionRepository.Update(regionToUpdate);
+
+                    unit.SaveChanges();
+                    result = Mappers.Region.ToDto(regionToUpdate);
+                    unit.CompleteTransactionScope();
+
+                    _logger.LogTrace("Updated Region item with id {regionId}", regionToUpdate.RegionId);
+                }
+
+                return result;
+            }
+            catch (RegionSingleException) { throw; }
+            catch (BaseException baseExc)
+            {
+                baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(region), region);
+
+                throw baseExc;
+            }
+            catch (Exception ex)
+            {
+                throw new RegionException(
+                    $"Unexpected error in {nameof(Update)}: {ex.Message}",
+                    ex,
+                    RegionErrorCodes.UNEXPECTED,
+                    (nameof(region), region, Visibility.Private));
+            }
         }
     }
 }

@@ -27,7 +27,7 @@ namespace APIBaseTemplate.Datamodel.DTO
     }
 
     /// <summary>
-    /// Options about <see cref="Airport"/> entity request
+    /// Options about <see cref="Region"/> entity request
     /// </summary>
     public class SearchRegionOptions
     {

@@ -5,6 +5,9 @@ using APIBaseTemplate.Repositories.Repositories;
 
 namespace APIBaseTemplate.Utils
 {
+    /// <summary>
+    /// <see cref="Region"/> business helper class
+    /// </summary>
     public class RegionBusinessHelper
     {
         /// <summary>
