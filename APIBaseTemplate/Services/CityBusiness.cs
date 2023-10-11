@@ -70,8 +70,8 @@ namespace APIBaseTemplate.Services
         private readonly ICityRepository _cityRepository;
 
         protected readonly static OrderByFilter<Datamodel.DbEntities.City> OrderByFilter = new OrderByFilter<Datamodel.DbEntities.City>()
-            .Add("CityId", i => i.CityId)
-            .Add("Name", i => i.Name);
+            .Add(nameof(Datamodel.DbEntities.City.CityId), i => i.CityId)
+            .Add(nameof(Datamodel.DbEntities.City.Name), i => i.Name);
 
         public CityBusiness(
             ILogger<CityBusiness> logger,
@@ -271,7 +271,6 @@ namespace APIBaseTemplate.Services
         /// <inheritdoc/>
         public City Update(City city)
         {
-            // Check Input
             Verify.IsNot.Null(city);
 
             _logger.LogTrace($"{nameof(CityBusiness)}.{nameof(Update)}({city})");
@@ -282,6 +281,9 @@ namespace APIBaseTemplate.Services
 
                 using (var unit = _uof.Get().BoundTo(_cityRepository).InTransaction())
                 {
+                    CityBusinessHelper.SanitizeNormalize(city);
+                    CityBusinessHelper.CityCommonValidation(city, insertMode: false, _cityRepository);
+
                     // Retrieve db item to update
                     var cityToUpdate = _cityRepository.Single(
                         x => x.CityId == city.CityId.Value,

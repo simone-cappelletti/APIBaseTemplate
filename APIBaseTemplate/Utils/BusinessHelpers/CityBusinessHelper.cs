@@ -43,7 +43,7 @@ namespace APIBaseTemplate.Utils
             Verify.IsNot.Null(city, nameof(city));
 
             // Name must be specified
-            Verify.IsNot.Null(city.Name, nameof(city.Name));
+            Verify.IsNot.NullOrEmpty(city.Name, nameof(city.Name));
 
             if (insertMode)
             {
@@ -51,8 +51,7 @@ namespace APIBaseTemplate.Utils
 
                 // Name must be unique
                 var duplicate = _cityRepository.SingleOrDefault(
-                    x => x.Name == city.Name,
-                    ioEx => throw new CityDuplicateException(nameof(city.Name), city.Name));
+                    x => x.Name == city.Name);
 
                 if (duplicate != null)
                 {

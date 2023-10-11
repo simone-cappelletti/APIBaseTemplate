@@ -11,6 +11,7 @@
         /// It was expected one and only one item
         /// </summary>
         public const string SINGLE_ERROR = "airportErrorSingle";
+        public const string DUPLICATE_ERROR = "airportErrorDuplicate";
 
         /// <summary>
         /// Error while deleting

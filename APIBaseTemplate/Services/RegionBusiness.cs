@@ -70,8 +70,8 @@ namespace APIBaseTemplate.Services
         private readonly IRegionRepository _regionRepository;
 
         protected readonly static OrderByFilter<Datamodel.DbEntities.Region> OrderByFilter = new OrderByFilter<Datamodel.DbEntities.Region>()
-            .Add("RegionId", i => i.RegionId)
-            .Add("Name", i => i.Name);
+            .Add(nameof(Datamodel.DbEntities.Region.RegionId), i => i.RegionId)
+            .Add(nameof(Datamodel.DbEntities.Region.Name), i => i.Name);
 
         public RegionBusiness(
             ILogger<RegionBusiness> logger,
@@ -271,7 +271,6 @@ namespace APIBaseTemplate.Services
         /// <inheritdoc/>
         public Region Update(Region region)
         {
-            // Check Input
             Verify.IsNot.Null(region);
 
             _logger.LogTrace($"{nameof(RegionBusiness)}.{nameof(Update)}({region})");
@@ -282,6 +281,9 @@ namespace APIBaseTemplate.Services
 
                 using (var unit = _uof.Get().BoundTo(_regionRepository).InTransaction())
                 {
+                    RegionBusinessHelper.SanitizeNormalize(region);
+                    RegionBusinessHelper.RegionCommonValidation(region, insertMode: false, _regionRepository);
+
                     // Retrieve db item to update
                     var regionToUpdate = _regionRepository.Single(
                         x => x.RegionId == region.RegionId.Value,

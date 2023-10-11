@@ -1,12 +1,11 @@
 ﻿using APIBaseTemplate.Common;
-using APIBaseTemplate.Common.Requests;
 
 namespace APIBaseTemplate.Datamodel.DTO
 {
     /// <summary>
     /// Search request on <see cref="Airline"/> entity
     /// </summary>
-    public class SearchAirlineRequest : SearchRequest<SearchAirlineFilters, SearchAirlineOptions>
+    public class SearchAirlineRequest : PaginatedSearchRequest<SearchAirlineFilters, SearchAirlineOptions>
     {
 
     }

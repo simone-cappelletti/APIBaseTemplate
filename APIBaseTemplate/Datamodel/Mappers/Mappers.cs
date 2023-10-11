@@ -11,5 +11,10 @@
         /// Mapper for <see cref="DTO.City"/> model from <see cref="DbEntities.City"/>)
         /// </summary>
         public readonly static CityMapper City = new();
+
+        /// <summary>
+        /// Mapper for <see cref="DTO.Airline"/> model from <see cref="DbEntities.Airline"/>)
+        /// </summary>
+        public readonly static AirlineMapper Airline = new();
     }
 }

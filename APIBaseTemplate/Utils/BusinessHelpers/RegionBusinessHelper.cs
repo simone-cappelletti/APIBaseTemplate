@@ -43,7 +43,7 @@ namespace APIBaseTemplate.Utils
             Verify.IsNot.Null(region, nameof(region));
 
             // Name must be specified
-            Verify.IsNot.Null(region.Name, nameof(region.Name));
+            Verify.IsNot.NullOrEmpty(region.Name, nameof(region.Name));
 
             if (insertMode)
             {
@@ -51,8 +51,7 @@ namespace APIBaseTemplate.Utils
 
                 // Name must be unique
                 var duplicate = _regionRepository.SingleOrDefault(
-                    x => x.Name == region.Name,
-                    ioEx => throw new RegionDuplicateException(nameof(region.Name), region.Name));
+                    x => x.Name == region.Name);
 
                 if (duplicate != null)
                 {

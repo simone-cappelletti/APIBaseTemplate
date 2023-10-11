@@ -1,5 +1,4 @@
 ﻿using APIBaseTemplate.Common.Requests;
-using System.Text.Json.Serialization;
 
 namespace APIBaseTemplate.Common
 {
