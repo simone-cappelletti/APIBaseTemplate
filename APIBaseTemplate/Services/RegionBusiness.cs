@@ -108,7 +108,7 @@ namespace APIBaseTemplate.Services
 
                     unit.CompleteTransactionScope();
 
-                    _logger.LogInformation($"Created region {newDbItem.RegionId} with name {newDbItem.Name}");
+                    _logger.LogInformation("Created region {newDbItem.RegionId} with name {newDbItem.Name}", newDbItem.RegionId, newDbItem.Name);
 
                     return result;
                 }
@@ -142,7 +142,7 @@ namespace APIBaseTemplate.Services
                     unit.SaveChanges();
                     unit.CompleteTransactionScope();
 
-                    _logger.LogInformation($"Deleted Region item with id {regionId}");
+                    _logger.LogInformation("Deleted Region item with id {regionId}", regionId);
                 }
             }
             catch (RegionSingleException) { throw; }

@@ -50,7 +50,7 @@ namespace APIBaseTemplate.Datamodel.Mappers
                 CityId = dbEntity.CityId,
                 Name = dbEntity.Name,
                 Region = Mappers.Region.ToDto(dbEntity.Region),
-                RegionId = dbEntity.RegionId,
+                RegionId = dbEntity.RegionId
             };
 
             return dtoEntity;

@@ -2,16 +2,16 @@
 
 namespace APIBaseTemplate.Datamodel.Mappers
 {
-    public class AirlineMapper
+    public class AirportMapper
     {
         /// <summary>
         /// Copy data from dto item <paramref name="dtoEntity"/> to a new db item
         /// </summary>
         /// <param name="dtoEntity"></param>
         /// <returns></returns>
-        public DbEntities.Airline ToDb(DTO.Airline dtoEntity)
+        public DbEntities.Airport ToDb(DTO.Airport dtoEntity)
         {
-            var dbEntity = new DbEntities.Airline();
+            var dbEntity = new DbEntities.Airport();
 
             ToDb(dtoEntity, dbEntity);
 
@@ -24,14 +24,14 @@ namespace APIBaseTemplate.Datamodel.Mappers
         /// <param name="dbEntity"></param>
         /// <param name="dtoEntity"></param>
         /// <returns></returns>
-        public void ToDb(DTO.Airline dtoEntity, DbEntities.Airline dbEntity)
+        public void ToDb(DTO.Airport dtoEntity, DbEntities.Airport dbEntity)
         {
             Verify.IsNot.Null(dtoEntity);
             Verify.IsNot.Null(dbEntity);
 
             dbEntity.Code = dtoEntity.Code;
             dbEntity.Name = dtoEntity.Name;
-            dbEntity.RegionId = dtoEntity.RegionId;
+            dbEntity.CityId = dtoEntity.CityId;
         }
 
         /// <summary>
@@ -39,19 +39,19 @@ namespace APIBaseTemplate.Datamodel.Mappers
         /// </summary>
         /// <param name="dbEntity"></param>
         /// <returns></returns>
-        public DTO.Airline ToDto(DbEntities.Airline dbEntity)
+        public DTO.Airport ToDto(DbEntities.Airport dbEntity)
         {
             if (dbEntity == null)
             {
                 return null;
             }
 
-            var dtoEntity = new DTO.Airline()
+            var dtoEntity = new DTO.Airport()
             {
                 Code = dbEntity.Code,
                 Name = dbEntity.Name,
-                RegionId = dbEntity.RegionId,
-                Region = Mappers.Region.ToDto(dbEntity.Region)
+                CityId = dbEntity.CityId,
+                City = Mappers.City.ToDto(dbEntity.City)
             };
 
             return dtoEntity;
@@ -62,7 +62,7 @@ namespace APIBaseTemplate.Datamodel.Mappers
         /// </summary>
         /// <param name="dbEntities"></param>
         /// <returns></returns>
-        public IEnumerable<DTO.Airline> ToDto(ICollection<DbEntities.Airline> dbEntities)
+        public IEnumerable<DTO.Airport> ToDto(ICollection<DbEntities.Airport> dbEntities)
         {
             foreach (var item in dbEntities)
             {

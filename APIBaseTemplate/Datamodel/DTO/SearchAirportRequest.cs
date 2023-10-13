@@ -6,7 +6,7 @@ namespace APIBaseTemplate.Datamodel.DTO
     /// <summary>
     /// Search request on <see cref="Airport"/> entity
     /// </summary>
-    public class SearchAirportRequest : SearchRequest<SearchAirportFilters, SearchAirportOptions>
+    public class SearchAirportRequest : PaginatedSearchRequest<SearchAirportFilters, SearchAirportOptions>
     {
 
     }

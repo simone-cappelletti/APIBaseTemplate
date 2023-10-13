@@ -122,7 +122,7 @@ namespace APIBaseTemplate.Services
 
                     unit.CompleteTransactionScope();
 
-                    _logger.LogInformation($"Created airline {newDbItem.AirlineId} with name {newDbItem.Code}");
+                    _logger.LogInformation("Created airline {newDbItem.AirlineId} with name {newDbItem.Code}", newDbItem.AirlineId, newDbItem.Code);
 
                     return result;
                 }
@@ -156,7 +156,7 @@ namespace APIBaseTemplate.Services
                     unit.SaveChanges();
                     unit.CompleteTransactionScope();
 
-                    _logger.LogInformation($"Deleted Airline item with id {airlineId}");
+                    _logger.LogInformation("Deleted Airline item with id {airlineId}", airlineId);
                 }
             }
             catch (AirlineSingleException) { throw; }

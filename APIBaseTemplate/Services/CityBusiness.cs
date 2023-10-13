@@ -108,7 +108,7 @@ namespace APIBaseTemplate.Services
 
                     unit.CompleteTransactionScope();
 
-                    _logger.LogInformation($"Created city {newDbItem.CityId} with name {newDbItem.Name}");
+                    _logger.LogInformation("Created city {newDbItem.CityId} with name {newDbItem.Name}", newDbItem.CityId, newDbItem.Name);
 
                     return result;
                 }
@@ -142,7 +142,7 @@ namespace APIBaseTemplate.Services
                     unit.SaveChanges();
                     unit.CompleteTransactionScope();
 
-                    _logger.LogInformation($"Deleted City item with id {cityId}");
+                    _logger.LogInformation("Deleted City item with id {cityId}", cityId);
                 }
             }
             catch (CitySingleException) { throw; }

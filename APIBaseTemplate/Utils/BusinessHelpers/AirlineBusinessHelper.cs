@@ -51,7 +51,7 @@ namespace APIBaseTemplate.Utils
             {
                 // Creating
 
-                // Name must be unique
+                // Code must be unique
                 var duplicate = _airlineRepository.SingleOrDefault(
                     x => x.Code == airline.Code);
 
