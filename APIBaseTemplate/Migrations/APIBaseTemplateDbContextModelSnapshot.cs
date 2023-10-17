@@ -22,7 +22,7 @@ namespace APIBaseTemplate.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("APIBaseTemplate.Datamodel.Db.Airline", b =>
+            modelBuilder.Entity("APIBaseTemplate.Datamodel.DbEntities.Airline", b =>
                 {
                     b.Property<int>("AirlineId")
                         .ValueGeneratedOnAdd()
@@ -51,7 +51,7 @@ namespace APIBaseTemplate.Migrations
                     b.ToTable("Airlines", (string)null);
                 });
 
-            modelBuilder.Entity("APIBaseTemplate.Datamodel.Db.Airport", b =>
+            modelBuilder.Entity("APIBaseTemplate.Datamodel.DbEntities.Airport", b =>
                 {
                     b.Property<int>("AirportId")
                         .ValueGeneratedOnAdd()
@@ -80,7 +80,7 @@ namespace APIBaseTemplate.Migrations
                     b.ToTable("Airports", (string)null);
                 });
 
-            modelBuilder.Entity("APIBaseTemplate.Datamodel.Db.City", b =>
+            modelBuilder.Entity("APIBaseTemplate.Datamodel.DbEntities.City", b =>
                 {
                     b.Property<int>("CityId")
                         .ValueGeneratedOnAdd()
@@ -104,7 +104,7 @@ namespace APIBaseTemplate.Migrations
                     b.ToTable("Cities", (string)null);
                 });
 
-            modelBuilder.Entity("APIBaseTemplate.Datamodel.Db.Currency", b =>
+            modelBuilder.Entity("APIBaseTemplate.Datamodel.DbEntities.Currency", b =>
                 {
                     b.Property<int>("CurrencyId")
                         .ValueGeneratedOnAdd()
@@ -127,7 +127,7 @@ namespace APIBaseTemplate.Migrations
                     b.ToTable("Currencies", (string)null);
                 });
 
-            modelBuilder.Entity("APIBaseTemplate.Datamodel.Db.Fligth", b =>
+            modelBuilder.Entity("APIBaseTemplate.Datamodel.DbEntities.Fligth", b =>
                 {
                     b.Property<int>("FligthId")
                         .ValueGeneratedOnAdd()
@@ -180,7 +180,7 @@ namespace APIBaseTemplate.Migrations
                     b.ToTable("Fligths", (string)null);
                 });
 
-            modelBuilder.Entity("APIBaseTemplate.Datamodel.Db.FligthService", b =>
+            modelBuilder.Entity("APIBaseTemplate.Datamodel.DbEntities.FligthService", b =>
                 {
                     b.Property<int>("FligthServiceId")
                         .ValueGeneratedOnAdd()
@@ -188,19 +188,19 @@ namespace APIBaseTemplate.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FligthServiceId"));
 
-                    b.Property<double>("Amout")
+                    b.Property<double>("Amount")
                         .HasColumnType("float");
 
                     b.Property<int>("CurrencyId")
                         .HasColumnType("int");
 
-                    b.Property<int>("FligthId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PriceType")
+                    b.Property<string>("FlightServiceType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasComment("FlightServiceType values (Fligth = 0, HandLuggage = 1, HoldLuggage = 2, FligthInsurance = 3)");
+
+                    b.Property<int>("FligthId")
+                        .HasColumnType("int");
 
                     b.HasKey("FligthServiceId");
 
@@ -213,7 +213,7 @@ namespace APIBaseTemplate.Migrations
                     b.ToTable("FligthServices", (string)null);
                 });
 
-            modelBuilder.Entity("APIBaseTemplate.Datamodel.Db.Region", b =>
+            modelBuilder.Entity("APIBaseTemplate.Datamodel.DbEntities.Region", b =>
                 {
                     b.Property<int>("RegionId")
                         .ValueGeneratedOnAdd()
@@ -231,9 +231,9 @@ namespace APIBaseTemplate.Migrations
                     b.ToTable("Regions", (string)null);
                 });
 
-            modelBuilder.Entity("APIBaseTemplate.Datamodel.Db.Airline", b =>
+            modelBuilder.Entity("APIBaseTemplate.Datamodel.DbEntities.Airline", b =>
                 {
-                    b.HasOne("APIBaseTemplate.Datamodel.Db.Region", "Region")
+                    b.HasOne("APIBaseTemplate.Datamodel.DbEntities.Region", "Region")
                         .WithMany()
                         .HasForeignKey("RegionId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -243,9 +243,9 @@ namespace APIBaseTemplate.Migrations
                     b.Navigation("Region");
                 });
 
-            modelBuilder.Entity("APIBaseTemplate.Datamodel.Db.Airport", b =>
+            modelBuilder.Entity("APIBaseTemplate.Datamodel.DbEntities.Airport", b =>
                 {
-                    b.HasOne("APIBaseTemplate.Datamodel.Db.City", "City")
+                    b.HasOne("APIBaseTemplate.Datamodel.DbEntities.City", "City")
                         .WithMany()
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -255,9 +255,9 @@ namespace APIBaseTemplate.Migrations
                     b.Navigation("City");
                 });
 
-            modelBuilder.Entity("APIBaseTemplate.Datamodel.Db.City", b =>
+            modelBuilder.Entity("APIBaseTemplate.Datamodel.DbEntities.City", b =>
                 {
-                    b.HasOne("APIBaseTemplate.Datamodel.Db.Region", "Region")
+                    b.HasOne("APIBaseTemplate.Datamodel.DbEntities.Region", "Region")
                         .WithMany()
                         .HasForeignKey("RegionId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -267,23 +267,23 @@ namespace APIBaseTemplate.Migrations
                     b.Navigation("Region");
                 });
 
-            modelBuilder.Entity("APIBaseTemplate.Datamodel.Db.Fligth", b =>
+            modelBuilder.Entity("APIBaseTemplate.Datamodel.DbEntities.Fligth", b =>
                 {
-                    b.HasOne("APIBaseTemplate.Datamodel.Db.Airline", "Airline")
+                    b.HasOne("APIBaseTemplate.Datamodel.DbEntities.Airline", "Airline")
                         .WithMany()
                         .HasForeignKey("AirlineId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("FK_FLIGHTS_AIRLINE");
 
-                    b.HasOne("APIBaseTemplate.Datamodel.Db.Airport", "ArrivalAirport")
+                    b.HasOne("APIBaseTemplate.Datamodel.DbEntities.Airport", "ArrivalAirport")
                         .WithMany()
                         .HasForeignKey("ArrivalAirportId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("FK_FLIGHTS_ARRIVAL_AIRPORT");
 
-                    b.HasOne("APIBaseTemplate.Datamodel.Db.Airport", "DepartureAirport")
+                    b.HasOne("APIBaseTemplate.Datamodel.DbEntities.Airport", "DepartureAirport")
                         .WithMany()
                         .HasForeignKey("DepartureAirportId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -297,16 +297,16 @@ namespace APIBaseTemplate.Migrations
                     b.Navigation("DepartureAirport");
                 });
 
-            modelBuilder.Entity("APIBaseTemplate.Datamodel.Db.FligthService", b =>
+            modelBuilder.Entity("APIBaseTemplate.Datamodel.DbEntities.FligthService", b =>
                 {
-                    b.HasOne("APIBaseTemplate.Datamodel.Db.Currency", "Currency")
+                    b.HasOne("APIBaseTemplate.Datamodel.DbEntities.Currency", "Currency")
                         .WithMany()
                         .HasForeignKey("CurrencyId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("FK_FLIGTHSERVICES_CURRENCY");
 
-                    b.HasOne("APIBaseTemplate.Datamodel.Db.Fligth", "Fligth")
+                    b.HasOne("APIBaseTemplate.Datamodel.DbEntities.Fligth", "Fligth")
                         .WithMany("FligthServices")
                         .HasForeignKey("FligthId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -318,7 +318,7 @@ namespace APIBaseTemplate.Migrations
                     b.Navigation("Fligth");
                 });
 
-            modelBuilder.Entity("APIBaseTemplate.Datamodel.Db.Fligth", b =>
+            modelBuilder.Entity("APIBaseTemplate.Datamodel.DbEntities.Fligth", b =>
                 {
                     b.Navigation("FligthServices");
                 });
