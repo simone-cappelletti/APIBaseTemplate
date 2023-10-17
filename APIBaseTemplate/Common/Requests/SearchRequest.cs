@@ -1,6 +1,4 @@
-﻿using APIBaseTemplate.Common.Requests;
-
-namespace APIBaseTemplate.Common
+﻿namespace APIBaseTemplate.Common
 {
     public class SearchRequest<TFilter, TOptions> : Request, ISorted
     {

@@ -55,7 +55,7 @@ namespace APIBaseTemplate.Repositories
                 i => i.AirlineId == airlineId,
                 ioEx => throw new AirlineSingleException(airlineId));
 
-            _logger.LogInformation($"AirlineId deleted {airlineId}");
+            _logger.LogInformation($"{nameof(Airline.AirlineId)} deleted {airlineId}");
 
             Delete(entityToDelete);
         }

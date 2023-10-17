@@ -14,11 +14,11 @@
         /// Hold luggage
         /// Fligt insurance
         /// </example>
-        public FlightServiceType PriceType { get; set; }
+        public FlightServiceType FlightServiceType { get; set; }
         /// <summary>
         /// Fligth service cost amount
         /// </summary>
-        public double Amout { get; set; }
+        public double Amount { get; set; }
         /// <summary>
         /// Id of the currency of the fligth service
         /// </summary>
@@ -34,7 +34,7 @@
         /// <summary>
         /// Fligth referenced by <see cref="FligthId"/>
         /// </summary>
-        public Fligth Fligth { get; set;}
+        public Fligth Fligth { get; set; }
     }
 
     /// <summary>

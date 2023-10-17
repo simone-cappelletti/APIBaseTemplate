@@ -21,5 +21,15 @@
         /// Mapper for <see cref="DTO.Airport"/> model from <see cref="DbEntities.Airport"/>)
         /// </summary>
         public readonly static AirportMapper Airport = new();
+
+        /// <summary>
+        /// Mapper for <see cref="DTO.Fligth"/> model from <see cref="DbEntities.Fligth"/>)
+        /// </summary>
+        public readonly static FligthMapper Fligth = new();
+
+        /// <summary>
+        /// Mapper for <see cref="DTO.FligthService"/> model from <see cref="DbEntities.FligthService"/>)
+        /// </summary>
+        public readonly static FligthService FligthService = new();
     }
 }

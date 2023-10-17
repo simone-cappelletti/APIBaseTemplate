@@ -389,6 +389,79 @@ namespace APIBaseTemplate.Common
             Func<IQueryable<TSource>,
             IOrderedQueryable<TSource>> defaultOrderBy)
                 => filter.OrderBy(query, orderBy, defaultOrderBy);
+
+        /// <summary>
+        /// Applies DateTime filter <see cref="DateTimeFilter"/>
+        /// using provided lambdas
+        /// </summary>
+        /// <typeparam name="T">Entity type</typeparam>
+        /// <param name="query">the query to filter</param>
+        /// <param name="filterOperator"></param>
+        /// <param name="isNull">Where isNull predicate</param>
+        /// <param name="equalTo">Where equalTo predicate</param>
+        /// <param name="lessThan">Where lessThan predicate</param>
+        /// <param name="greaterThan">Where greaterThan predicate</param>
+        /// <param name="between">Where between predicate</param>
+        /// <returns></returns>
+        public static IQueryable<T> WhereDateTimeFilter<T>(
+            this IQueryable<T> query,
+            EnmDateTimeFilterOperators filterOperator,
+            Expression<Func<T, bool>> isNull,
+            Expression<Func<T, bool>> equalTo,
+            Expression<Func<T, bool>> lessThan,
+            Expression<Func<T, bool>> greaterThan,
+            Expression<Func<T, bool>> between
+            )
+        {
+            query = (filterOperator) switch
+            {
+                EnmDateTimeFilterOperators.IsNull =>
+                    isNull != null ?
+                    query.Where(isNull) :
+                    throw new ArgumentNullException(
+                        nameof(isNull),
+                        $"operator {filterOperator} not expected"),
+
+                EnmDateTimeFilterOperators.EqualTo =>
+                    equalTo != null ?
+                    query.Where(equalTo) :
+                    throw new ArgumentNullException(
+                        nameof(equalTo),
+                        $"operator {filterOperator} not expected"),
+
+                EnmDateTimeFilterOperators.NotEqualTo =>
+                    equalTo != null ?
+                    query.Where(equalTo.Not()) :
+                    throw new ArgumentNullException(
+                        nameof(equalTo),
+                        $"operator {filterOperator} not expected"),
+
+                EnmDateTimeFilterOperators.LessThan =>
+                    lessThan != null ?
+                    query.Where(lessThan) :
+                    throw new ArgumentNullException(
+                        nameof(lessThan),
+                        $"operator {filterOperator} not expected"),
+
+                EnmDateTimeFilterOperators.GreaterThan =>
+                    greaterThan != null ?
+                    query.Where(greaterThan) :
+                    throw new ArgumentNullException(
+                        nameof(greaterThan),
+                        $"operator {filterOperator} not expected"),
+
+                EnmDateTimeFilterOperators.Between =>
+                    between != null ?
+                    query.Where(between) :
+                    throw new ArgumentNullException(
+                        nameof(between),
+                        $"operator {filterOperator} not expected"),
+
+                _ => throw new ArgumentOutOfRangeException(
+                    $"Unsupported value {filterOperator}"), // unexpected operator
+            };
+            return query;
+        }
     }
 
     public static class IRepositoryExtensions

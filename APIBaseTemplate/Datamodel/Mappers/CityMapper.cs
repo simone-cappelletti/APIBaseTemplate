@@ -61,7 +61,7 @@ namespace APIBaseTemplate.Datamodel.Mappers
         /// </summary>
         /// <param name="dbEntities"></param>
         /// <returns></returns>
-        public IEnumerable<DTO.City> ToDto(ICollection<DbEntities.City> dbEntities)
+        public IEnumerable<DTO.City> ToDto(IEnumerable<DbEntities.City> dbEntities)
         {
             foreach (var item in dbEntities)
             {

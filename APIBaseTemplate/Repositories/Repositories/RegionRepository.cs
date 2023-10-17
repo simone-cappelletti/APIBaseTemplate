@@ -55,7 +55,7 @@ namespace APIBaseTemplate.Repositories.Repositories
                 i => i.RegionId == regionId,
                 ioEx => throw new RegionSingleException(regionId));
 
-            _logger.LogInformation($"RegionId deleted {regionId}");
+            _logger.LogInformation($"{nameof(Region.RegionId)} deleted {regionId}");
 
             Delete(entityToDelete);
         }

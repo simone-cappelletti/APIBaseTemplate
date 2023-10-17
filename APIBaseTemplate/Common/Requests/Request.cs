@@ -1,4 +1,4 @@
-﻿namespace APIBaseTemplate.Common.Requests
+﻿namespace APIBaseTemplate.Common
 {
     /// <summary>
     /// Container class for web request parameters

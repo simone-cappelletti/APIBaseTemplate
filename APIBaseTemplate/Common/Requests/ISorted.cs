@@ -1,4 +1,4 @@
-﻿namespace APIBaseTemplate.Common.Requests
+﻿namespace APIBaseTemplate.Common
 {
     public interface ISorted
     {

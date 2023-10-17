@@ -20,7 +20,8 @@ builder.Services.AddControllers(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc(apiVersion,
+    options.SwaggerDoc(
+        apiVersion,
         new OpenApiInfo()
         {
             Title = apiName,

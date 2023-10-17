@@ -55,7 +55,7 @@ namespace APIBaseTemplate.Repositories
                 i => i.AirportId == airportId,
                 ioEx => throw new AirportSingleException(airportId));
 
-            _logger.LogInformation($"AirportId deleted {airportId}");
+            _logger.LogInformation($"{nameof(Airport.AirportId)} deleted {airportId}");
 
             Delete(entityToDelete);
         }

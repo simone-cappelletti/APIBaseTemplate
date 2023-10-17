@@ -55,7 +55,7 @@ namespace APIBaseTemplate.Repositories.Repositories
                 i => i.CityId == cityId,
                 ioEx => throw new CitySingleException(cityId));
 
-            _logger.LogInformation($"CityId deleted {cityId}");
+            _logger.LogInformation($"{nameof(City.CityId)} deleted {cityId}");
 
             Delete(entityToDelete);
         }

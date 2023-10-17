@@ -1,6 +1,4 @@
-﻿using APIBaseTemplate.Datamodel.DbEntities;
-
-namespace APIBaseTemplate.Datamodel.DTO
+﻿namespace APIBaseTemplate.Datamodel.DTO
 {
     public class FligthService
     {
@@ -16,11 +14,11 @@ namespace APIBaseTemplate.Datamodel.DTO
         /// Hold luggage
         /// Fligt insurance
         /// </example>
-        public FlightServiceType PriceType { get; set; }
+        public FlightServiceType FlightServiceType { get; set; }
         /// <summary>
         /// Fligth service cost amount
         /// </summary>
-        public double Amout { get; set; }
+        public double Amount { get; set; }
         /// <summary>
         /// Id of the currency of the fligth service
         /// </summary>

@@ -62,7 +62,7 @@ namespace APIBaseTemplate.Datamodel.Mappers
         /// </summary>
         /// <param name="dbEntities"></param>
         /// <returns></returns>
-        public IEnumerable<DTO.Airline> ToDto(ICollection<DbEntities.Airline> dbEntities)
+        public IEnumerable<DTO.Airline> ToDto(IEnumerable<DbEntities.Airline> dbEntities)
         {
             foreach (var item in dbEntities)
             {

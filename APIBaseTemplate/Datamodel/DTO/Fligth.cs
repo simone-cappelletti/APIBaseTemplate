@@ -57,6 +57,6 @@
         /// <summary>
         /// Fligth Services
         /// </summary>
-        public ICollection<FligthService> FligthServices { get; set; }
+        public IEnumerable<FligthService> FligthServices { get; set; }
     }
 }

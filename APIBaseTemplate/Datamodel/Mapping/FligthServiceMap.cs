@@ -19,8 +19,8 @@ namespace APIBaseTemplate.Datamodel.Mapping
 
             // Columns
             builder.Property(p => p.FligthServiceId).UseIdentityColumn();
-            builder.Property(p => p.PriceType).HasEnumComment().HasConversion<string>().IsRequired();
-            builder.Property(p => p.Amout).IsRequired();
+            builder.Property(p => p.FlightServiceType).HasEnumComment().HasConversion<string>().IsRequired();
+            builder.Property(p => p.Amount).IsRequired();
             builder.Property(p => p.CurrencyId).IsRequired();
             builder.Property(p => p.FligthId).IsRequired();
 
