@@ -2,7 +2,7 @@
 
 namespace APIBaseTemplate.Datamodel.Mappers
 {
-    public class FligthService
+    public class FligthServiceMapper
     {
         /// <summary>
         /// Copy data from dto item <paramref name="dtoEntity"/> to a new db item
@@ -52,7 +52,7 @@ namespace APIBaseTemplate.Datamodel.Mappers
                 FlightServiceType = ToDto(dbEntity.FlightServiceType),
                 Amount = dbEntity.Amount,
                 CurrencyId = dbEntity.CurrencyId,
-                //Currency = Mappers.Currency.ToDto(dbEntity.Currency),
+                Currency = Mappers.Currency.ToDto(dbEntity.Currency),
                 FligthId = dbEntity.FligthId,
                 Fligth = Mappers.Fligth.ToDto(dbEntity.Fligth)
             };
@@ -120,6 +120,32 @@ namespace APIBaseTemplate.Datamodel.Mappers
                 DTO.FlightServiceType.FligthInsurance => DbEntities.FlightServiceType.FligthInsurance,
                 _ => throw new ArgumentOutOfRangeException(nameof(dtoEnum), $"Unsupported value >{dtoEnum}<"),
             };
+        }
+
+        /// <summary>
+        /// Map DB entity list to DTO entity
+        /// </summary>
+        /// <param name="dbEntities"></param>
+        /// <returns></returns>
+        public IEnumerable<DTO.FlightServiceType> ToDto(IEnumerable<DbEntities.FlightServiceType> dbEntities)
+        {
+            foreach (var item in dbEntities)
+            {
+                yield return ToDto(item);
+            }
+        }
+
+        /// <summary>
+        /// Map DTO entity list to Db entity
+        /// </summary>
+        /// <param name="dtoEntities"></param>
+        /// <returns></returns>
+        public IEnumerable<DbEntities.FlightServiceType> ToDb(IEnumerable<DTO.FlightServiceType> dtoEntities)
+        {
+            foreach (var item in dtoEntities)
+            {
+                yield return ToDb(item);
+            }
         }
     }
 }

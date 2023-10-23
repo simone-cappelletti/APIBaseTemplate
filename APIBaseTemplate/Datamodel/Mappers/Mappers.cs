@@ -30,6 +30,11 @@
         /// <summary>
         /// Mapper for <see cref="DTO.FligthService"/> model from <see cref="DbEntities.FligthService"/>)
         /// </summary>
-        public readonly static FligthService FligthService = new();
+        public readonly static FligthServiceMapper FligthService = new();
+
+        /// <summary>
+        /// Mapper for <see cref="DTO.Currency"/> model from <see cref="DbEntities.Currency"/>)
+        /// </summary>
+        public readonly static CurrencyMapper Currency = new();
     }
 }

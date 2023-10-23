@@ -2,7 +2,7 @@
 using APIBaseTemplate.Common.Exceptions;
 using APIBaseTemplate.Datamodel.DTO;
 using APIBaseTemplate.Datamodel.Mappers;
-using APIBaseTemplate.Repositories.Repositories;
+using APIBaseTemplate.Repositories;
 using APIBaseTemplate.Repositories.UnitOfWork;
 using APIBaseTemplate.Utils;
 

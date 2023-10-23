@@ -5,7 +5,7 @@ using APIBaseTemplate.Utils;
 using Microsoft.EntityFrameworkCore;
 using City = APIBaseTemplate.Datamodel.DbEntities.City;
 
-namespace APIBaseTemplate.Repositories.Repositories
+namespace APIBaseTemplate.Repositories
 {
     public interface ICityRepository : IRepository<City>
     {

@@ -4,7 +4,6 @@ using APIBaseTemplate.Common.Exceptions.Airport;
 using APIBaseTemplate.Datamodel.DTO;
 using APIBaseTemplate.Datamodel.Mappers;
 using APIBaseTemplate.Repositories;
-using APIBaseTemplate.Repositories.Repositories;
 using APIBaseTemplate.Repositories.UnitOfWork;
 using APIBaseTemplate.Utils;
 

@@ -5,7 +5,7 @@ using APIBaseTemplate.Utils;
 using Microsoft.EntityFrameworkCore;
 using Region = APIBaseTemplate.Datamodel.DbEntities.Region;
 
-namespace APIBaseTemplate.Repositories.Repositories
+namespace APIBaseTemplate.Repositories
 {
     public interface IRegionRepository : IRepository<Region>
     {

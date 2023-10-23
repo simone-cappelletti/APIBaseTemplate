@@ -1,7 +1,7 @@
 ﻿using APIBaseTemplate.Common;
 using APIBaseTemplate.Common.Exceptions;
 using APIBaseTemplate.Datamodel.DTO;
-using APIBaseTemplate.Repositories.Repositories;
+using APIBaseTemplate.Repositories;
 
 namespace APIBaseTemplate.Utils
 {
