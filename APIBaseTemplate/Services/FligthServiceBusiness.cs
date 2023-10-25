@@ -69,6 +69,7 @@ namespace APIBaseTemplate.Services
         private readonly IUnitOfWorkFactory _uof;
         private readonly IFligthServiceRepository _fligthServiceRepository;
         private readonly IFligthRepository _fligthRepository;
+        private readonly IRepository<Datamodel.DbEntities.Currency> _currencyRepository;
 
         protected readonly static OrderByFilter<Datamodel.DbEntities.FligthService> OrderByFilter = new OrderByFilter<Datamodel.DbEntities.FligthService>()
             .Add(nameof(Datamodel.DbEntities.FligthService.FligthServiceId), i => i.FligthServiceId)
@@ -78,12 +79,14 @@ namespace APIBaseTemplate.Services
             ILogger<FligthServiceBusiness> logger,
             IUnitOfWorkFactory uof,
             IFligthServiceRepository fligthServiceRepository,
-             IFligthRepository fligthRepository)
+            IFligthRepository fligthRepository,
+            IRepository<Datamodel.DbEntities.Currency> currencyRepository)
         {
             _logger = logger;
             _uof = uof;
             _fligthServiceRepository = fligthServiceRepository;
             _fligthRepository = fligthRepository;
+            _currencyRepository = currencyRepository;
         }
 
         /// <inheritdoc/>
@@ -103,11 +106,15 @@ namespace APIBaseTemplate.Services
                     // Mapping new DTO to new db item
                     var newDbItem = Mappers.FligthService.ToDb(fligthService);
 
-                    // Check Currency???
+                    // Check Currency
+                    var currency = _currencyRepository.Single(
+                        x => x.CurrencyId == fligthService.CurrencyId,
+                        ioEx => throw new CurrencySingleException(fligthService.CurrencyId));
+                    newDbItem.Currency = currency;
 
                     // Check Fligth
                     var fligth = _fligthRepository.Single(
-                    x => x.FligthId == fligthService.FligthId,
+                        x => x.FligthId == fligthService.FligthId,
                         ioEx => throw new FligthServiceSingleException(fligthService.FligthId));
                     newDbItem.Fligth = fligth;
 

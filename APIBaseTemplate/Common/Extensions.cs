@@ -12,7 +12,7 @@ using System.Text;
 
 namespace APIBaseTemplate.Common
 {
-    public static class CommonExtensions
+    public static class Extensions
     {
         /// <summary>
         /// Add the base db context.
