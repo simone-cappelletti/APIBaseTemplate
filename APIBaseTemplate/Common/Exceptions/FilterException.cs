@@ -13,8 +13,9 @@
                 ("filterType", filterType, Visibility.Public),
                 ("operator", @operator, Visibility.Public),
                 ("value", value, Visibility.Public),
-                ("value2", value2, Visibility.Public)
-                )
-        { }
+                ("value2", value2, Visibility.Public))
+        {
+        
+        }
     }
 }

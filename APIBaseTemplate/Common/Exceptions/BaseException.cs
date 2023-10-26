@@ -62,19 +62,21 @@ namespace APIBaseTemplate.Common
         /// new BaseException($"Name {company.CompanyName} already used",
         ///                   Constants.GenericErrorCodes.ITEM_ALREADY_EXISTS,
         ///                   ("companyName", "companyName1", ParamVisibility.Public), 
-        ///                   ("anotherParameterName", "parameter2", ParamVisibility.Public)
-        ///                   )
+        ///                   ("anotherParameterName", "parameter2", ParamVisibility.Public))
         /// </example>
         public BaseException(
             string message,
             string errorCode = GenericErrorCodes.UNEXPECTED,
-            params (string parameterName, object? parameterValue, Visibility visibility)[] data) : base(message)
+            params (string parameterName, object? parameterValue, Visibility visibility)[] data)
+            : base(message)
         {
             TimestampUtc = DateTime.UtcNow;
             ErrorCode = errorCode;
 
             if (data != null)
+            {
                 InitErrorCodeParameters(data);
+            }
         }
 
         /// <summary>
@@ -96,13 +98,16 @@ namespace APIBaseTemplate.Common
         public BaseException(string message,
             Exception inner,
             string errorCode = GenericErrorCodes.UNEXPECTED,
-            params (string parameterName, object? parameterValue, Visibility visibility)[] data) : base(message, inner)
+            params (string parameterName, object? parameterValue, Visibility visibility)[] data)
+            : base(message, inner)
         {
             TimestampUtc = DateTime.UtcNow;
             ErrorCode = errorCode;
 
             if (data != null)
+            {
                 InitErrorCodeParameters(data);
+            }
         }
 
         /// <summary>

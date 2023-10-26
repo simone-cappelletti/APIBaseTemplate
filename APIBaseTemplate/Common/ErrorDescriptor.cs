@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace APIBaseTemplate.Common
+﻿namespace APIBaseTemplate.Common
 {
     /// <summary>
     /// Describe an error encountered
@@ -33,7 +31,6 @@ namespace APIBaseTemplate.Common
         /// <remarks>
         /// Helps to this incident among application log
         /// </remarks>
-        [JsonPropertyName("errorCaseId")]
         public string ErrorCaseId { get; set; }
 
         /// <summary>
@@ -42,7 +39,6 @@ namespace APIBaseTemplate.Common
         /// <remarks>
         /// A client-generated identifier which eventually ties together several server requests
         /// </remarks>
-        [JsonPropertyName("distribuitedContextId")]
         public string DistribuitedContextId { get; set; }
 
         /// <summary>
@@ -51,19 +47,16 @@ namespace APIBaseTemplate.Common
         /// <example>
         /// itemNotFound
         /// </example>
-        [JsonPropertyName("errorCode")]
         public string ErrorCode { get; set; }
 
         /// <summary>
         /// Information about error origin
         /// </summary>
-        [JsonPropertyName("errorOrigin")]
         public string? ErrorOrigin { get; set; }
 
         /// <summary>
         /// Parameters for the translated message described by the key <see cref="ErrorCode"/>
         /// </summary>
-        [JsonPropertyName("errorMessageParams")]
         public IDictionary<string, string> ErrorMessageParams { get; set; }
 
         public override string ToString()
