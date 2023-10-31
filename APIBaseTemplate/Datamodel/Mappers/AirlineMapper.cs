@@ -48,6 +48,7 @@ namespace APIBaseTemplate.Datamodel.Mappers
 
             var dtoEntity = new DTO.Airline()
             {
+                AirlineId = dbEntity.AirlineId,
                 Code = dbEntity.Code,
                 Name = dbEntity.Name,
                 RegionId = dbEntity.RegionId,

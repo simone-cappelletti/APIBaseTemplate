@@ -68,6 +68,7 @@ namespace APIBaseTemplate.Services
         private readonly ILogger<CityBusiness> _logger;
         private readonly IUnitOfWorkFactory _uof;
         private readonly ICityRepository _cityRepository;
+        private readonly IRegionRepository _regionRepository;
 
         protected readonly static OrderByFilter<Datamodel.DbEntities.City> OrderByFilter = new OrderByFilter<Datamodel.DbEntities.City>()
             .Add(nameof(Datamodel.DbEntities.City.CityId), i => i.CityId)
@@ -76,11 +77,13 @@ namespace APIBaseTemplate.Services
         public CityBusiness(
             ILogger<CityBusiness> logger,
             IUnitOfWorkFactory uof,
-            ICityRepository cityRepository)
+            ICityRepository cityRepository,
+            IRegionRepository regionRepository)
         {
             _logger = logger;
             _uof = uof;
             _cityRepository = cityRepository;
+            _regionRepository = regionRepository;
         }
 
         /// <inheritdoc/>
@@ -92,13 +95,19 @@ namespace APIBaseTemplate.Services
 
             try
             {
-                using (var unit = _uof.Get().BoundTo(_cityRepository).InTransaction())
+                using (var unit = _uof.Get().BoundTo(_cityRepository, _regionRepository).InTransaction())
                 {
                     CityBusinessHelper.SanitizeNormalize(city);
                     CityBusinessHelper.CityCommonValidation(city, insertMode: true, _cityRepository);
 
                     // Mapping new DTO to new db item
                     var newDbItem = Mappers.City.ToDb(city);
+
+                    // Check region
+                    var region = _regionRepository.Single(
+                    x => x.RegionId == city.RegionId,
+                        ioEx => throw new RegionSingleException(city.RegionId));
+                    newDbItem.Region = region;
 
                     _cityRepository.Add(newDbItem);
 
@@ -279,7 +288,7 @@ namespace APIBaseTemplate.Services
             {
                 var result = new City();
 
-                using (var unit = _uof.Get().BoundTo(_cityRepository).InTransaction())
+                using (var unit = _uof.Get().BoundTo(_cityRepository, _regionRepository).InTransaction())
                 {
                     CityBusinessHelper.SanitizeNormalize(city);
                     CityBusinessHelper.CityCommonValidation(city, insertMode: false, _cityRepository);
@@ -291,6 +300,12 @@ namespace APIBaseTemplate.Services
 
                     // Update item
                     Mappers.City.ToDb(city, cityToUpdate);
+
+                    // Check region
+                    var region = _regionRepository.Single(
+                    x => x.RegionId == cityToUpdate.RegionId,
+                        ioEx => throw new RegionSingleException(cityToUpdate.RegionId));
+                    cityToUpdate.Region = region;
 
                     _cityRepository.Update(cityToUpdate);
 

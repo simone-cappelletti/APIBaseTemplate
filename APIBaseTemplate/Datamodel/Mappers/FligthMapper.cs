@@ -55,6 +55,7 @@ namespace APIBaseTemplate.Datamodel.Mappers
 
             var dtoEntity = new DTO.Fligth()
             {
+                FligthId = dbEntity.FligthId,
                 Code = dbEntity.Code,
                 AirlineId = dbEntity.AirlineId,
                 Airline = Mappers.Airline.ToDto(dbEntity.Airline),

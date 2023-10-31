@@ -83,7 +83,7 @@ namespace APIBaseTemplateUnitTests.Business
 
             var region = wonkaDataset.Regions
                 .Where(x => x.RegionId != originalDbItem.RegionId)
-                .ElementAt(rnd.Next(wonkaDataset.Cities.Count() - 1));
+                .ElementAt(rnd.Next(wonkaDataset.Regions.Count() - 1));
             var modifiedDtoItem = new APIBaseTemplate.Datamodel.DTO.City()
             {
                 CityId = originalDbItem.CityId,
@@ -95,7 +95,7 @@ namespace APIBaseTemplateUnitTests.Business
                 .Setup(r => r.Query())
                 .Returns(() => wonkaDataset.Cities.Where(r => r.CityId == originalDbItem.CityId));
             MockData.RegionRepository
-                .Setup(r => r.Get(It.IsAny<APIBaseTemplate.Datamodel.DTO.SearchRegionRequest>()))
+                .Setup(r => r.Query())
                 .Returns(() => wonkaDataset.Regions.Where(r => r.RegionId == region.RegionId));
 
             // Act
@@ -139,7 +139,8 @@ namespace APIBaseTemplateUnitTests.Business
             return new CityBusiness(
                 MockData.Logger<CityBusiness>().Object,
                 MockData.UnitOfWorkFactory.Object,
-                MockData.CityRepository.Object);
+                MockData.CityRepository.Object,
+                MockData.RegionRepository.Object);
         }
     }
 }

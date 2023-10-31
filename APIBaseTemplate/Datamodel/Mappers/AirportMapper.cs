@@ -48,6 +48,7 @@ namespace APIBaseTemplate.Datamodel.Mappers
 
             var dtoEntity = new DTO.Airport()
             {
+                AirportId = dbEntity.AirportId,
                 Code = dbEntity.Code,
                 Name = dbEntity.Name,
                 CityId = dbEntity.CityId,

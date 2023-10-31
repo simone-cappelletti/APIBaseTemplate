@@ -49,6 +49,7 @@ namespace APIBaseTemplate.Datamodel.Mappers
 
             var dtoEntity = new DTO.FligthService()
             {
+                FligthServiceId = dbEntity.FligthServiceId,
                 FlightServiceType = ToDto(dbEntity.FlightServiceType),
                 Amount = dbEntity.Amount,
                 CurrencyId = dbEntity.CurrencyId,
