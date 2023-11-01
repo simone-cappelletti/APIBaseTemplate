@@ -5,42 +5,40 @@ namespace APIBaseTemplateUnitTests.Business
 {
     public class AirportBusinessTest : BaseTest
     {
+        private static WonkaDataset _wonkaDataset = new WonkaDataset();
+        private static Random _rnd = new Random();
+
         public static IEnumerable<object[]> GetAirportData()
         {
-            var wonkaDataset = new WonkaDataset();
-            var rnd = new Random();
+            var airportId = _rnd.Next(_wonkaDataset.Airports.Count());
+            yield return new object[] { _wonkaDataset.Airports.ElementAt(airportId).AirportId, _wonkaDataset.Airports.ElementAt(airportId) };
 
-            var airportId = rnd.Next(wonkaDataset.Airports.Count());
-            yield return new object[] { wonkaDataset.Airports.ElementAt(airportId).AirportId, wonkaDataset.Airports.ElementAt(airportId) };
+            airportId = _rnd.Next(_wonkaDataset.Airports.Count());
+            yield return new object[] { _wonkaDataset.Airports.ElementAt(airportId).AirportId, _wonkaDataset.Airports.ElementAt(airportId) };
 
-            airportId = rnd.Next(wonkaDataset.Airports.Count());
-            yield return new object[] { wonkaDataset.Airports.ElementAt(airportId).AirportId, wonkaDataset.Airports.ElementAt(airportId) };
-
-            airportId = rnd.Next(wonkaDataset.Airports.Count());
-            yield return new object[] { wonkaDataset.Airports.ElementAt(airportId).AirportId, wonkaDataset.Airports.ElementAt(airportId) };
+            airportId = _rnd.Next(_wonkaDataset.Airports.Count());
+            yield return new object[] { _wonkaDataset.Airports.ElementAt(airportId).AirportId, _wonkaDataset.Airports.ElementAt(airportId) };
         }
 
         [Fact]
         public void Create_Airport()
         {
             // Arrange
-            var wonkaDataset = new WonkaDataset();
-            var rnd = new Random();
             var business = CreateBusiness();
 
             MockData.AirportRepository
                 .Setup(r => r.Query())
-                .Returns(() => wonkaDataset.Airports);
+                .Returns(() => _wonkaDataset.Airports);
 
             MockData.CityRepository
                 .Setup(r => r.Query())
-                .Returns(() => wonkaDataset.Cities);
+                .Returns(() => _wonkaDataset.Cities);
 
             var newDto = new APIBaseTemplate.Datamodel.DTO.Airport()
             {
                 Code = "New airport code",
                 Name = "New airport name",
-                CityId = wonkaDataset.Cities.ElementAt(rnd.Next(wonkaDataset.Cities.Count())).CityId
+                CityId = _wonkaDataset.Cities.ElementAt(_rnd.Next(_wonkaDataset.Cities.Count())).CityId
             };
 
             // Act
@@ -60,14 +58,12 @@ namespace APIBaseTemplateUnitTests.Business
         public void Delete_Airport()
         {
             // Arrange
-            var wonkaDataset = new WonkaDataset();
-            var rnd = new Random();
             var business = CreateBusiness();
-            var entityToDelete = wonkaDataset.Airports.ElementAt(rnd.Next(wonkaDataset.Airports.Count())).AirportId;
+            var entityToDelete = _wonkaDataset.Airports.ElementAt(_rnd.Next(_wonkaDataset.Airports.Count())).AirportId;
 
             MockData.AirportRepository
                 .Setup(r => r.Query())
-                .Returns(() => wonkaDataset.Airports);
+                .Returns(() => _wonkaDataset.Airports);
 
             // Act
             business.Delete(entityToDelete);
@@ -80,16 +76,14 @@ namespace APIBaseTemplateUnitTests.Business
         public void Update_Airport()
         {
             // Arrange
-            var wonkaDataset = new WonkaDataset();
-            var rnd = new Random();
             var business = CreateBusiness();
 
             // save a copy of object being modified
-            var originalDbItem = Clone(wonkaDataset.Airports.ElementAt(rnd.Next(wonkaDataset.Airports.Count())));
+            var originalDbItem = Clone(_wonkaDataset.Airports.ElementAt(_rnd.Next(_wonkaDataset.Airports.Count())));
 
-            var city = wonkaDataset.Cities
+            var city = _wonkaDataset.Cities
                 .Where(x => x.CityId != originalDbItem.CityId)
-                .ElementAt(rnd.Next(wonkaDataset.Cities.Count() - 1));
+                .ElementAt(_rnd.Next(_wonkaDataset.Cities.Count() - 1));
             var modifiedDtoItem = new APIBaseTemplate.Datamodel.DTO.Airport()
             {
                 AirportId = originalDbItem.AirportId,
@@ -100,10 +94,10 @@ namespace APIBaseTemplateUnitTests.Business
 
             MockData.AirportRepository
                 .Setup(r => r.Query())
-                .Returns(() => wonkaDataset.Airports.Where(r => r.AirportId == originalDbItem.AirportId));
+                .Returns(() => _wonkaDataset.Airports.Where(r => r.AirportId == originalDbItem.AirportId));
             MockData.CityRepository
                 .Setup(r => r.Query())
-                .Returns(() => wonkaDataset.Cities.Where(r => r.CityId == city.CityId));
+                .Returns(() => _wonkaDataset.Cities.Where(r => r.CityId == city.CityId));
 
             // Act
              var updatedDtoItem = business.Update(modifiedDtoItem);
@@ -123,16 +117,14 @@ namespace APIBaseTemplateUnitTests.Business
         public void Get_Airport_by_Id(int airportId, APIBaseTemplate.Datamodel.DbEntities.Airport expectedDbItem)
         {
             // Arrange
-            var wonkaDataset = new WonkaDataset();
-            var rnd = new Random();
             var business = CreateBusiness();
 
             MockData.AirportRepository
                 .Setup(r => r.Get(It.IsAny<APIBaseTemplate.Datamodel.DTO.SearchAirportRequest>()))
-                .Returns(() => wonkaDataset.Airports.Where(v => v.AirportId == airportId));
+                .Returns(() => _wonkaDataset.Airports.Where(v => v.AirportId == airportId));
 
             // Act
-            var retrievedDtoItem = business.GetById(wonkaDataset.Airports.ElementAt(rnd.Next(wonkaDataset.Airports.Count())).AirportId);
+            var retrievedDtoItem = business.GetById(airportId);
             var retrievedConvertedDbItem = APIBaseTemplate.Datamodel.Mappers.Mappers.Airport.ToDb(retrievedDtoItem);
 
             // Assert

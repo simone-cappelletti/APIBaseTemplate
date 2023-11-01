@@ -70,6 +70,7 @@ namespace APIBaseTemplate.Services
         private readonly IFligthRepository _fligthRepository;
         private readonly IAirlineRepository _airlineRepository;
         private readonly IAirportRepository _airportRepository;
+        private readonly IFligthServiceRepository _fligthServiceRepository;
 
         protected readonly static OrderByFilter<Datamodel.DbEntities.Fligth> OrderByFilter = new OrderByFilter<Datamodel.DbEntities.Fligth>()
             .Add(nameof(Datamodel.DbEntities.Fligth.FligthId), i => i.FligthId)
@@ -80,13 +81,15 @@ namespace APIBaseTemplate.Services
             IUnitOfWorkFactory uof,
             IFligthRepository fligthRepository,
             IAirlineRepository airlineRepository,
-            IAirportRepository airportRepository)
+            IAirportRepository airportRepository,
+            IFligthServiceRepository fligthServiceRepository)
         {
             _logger = logger;
             _uof = uof;
             _fligthRepository = fligthRepository;
             _airlineRepository = airlineRepository;
             _airportRepository = airportRepository;
+            _fligthServiceRepository = fligthServiceRepository;
         }
 
         /// <inheritdoc/>
@@ -123,6 +126,18 @@ namespace APIBaseTemplate.Services
                         x => x.AirportId == fligth.ArrivalAirportId,
                         ioEx => throw new AirportSingleException(fligth.ArrivalAirportId));
                     newDbItem.ArrivalAirport = arrivalAirport;
+
+                    // Check FligthServices
+                    var fligthServices = new List<Datamodel.DbEntities.FligthService>();
+                    foreach (var fligthService in fligth.FligthServices)
+                    {
+                        fligthServices.Add(
+                                _fligthServiceRepository.Single(
+                            x => x.FligthServiceId == fligthService.FligthServiceId,
+                            ioEx => throw new FligthServiceSingleException(fligth.ArrivalAirportId))
+                            );
+                    }
+                    newDbItem.FligthServices = fligthServices;
 
                     _fligthRepository.Add(newDbItem);
 
@@ -333,6 +348,18 @@ namespace APIBaseTemplate.Services
                         x => x.AirportId == fligth.ArrivalAirportId,
                         ioEx => throw new AirportSingleException(fligth.ArrivalAirportId));
                     fligthToUpdate.ArrivalAirport = arrivalAirport;
+
+                    // Check FligthServices
+                    var fligthServices = new List<Datamodel.DbEntities.FligthService>();
+                    foreach (var fligthService in fligth.FligthServices)
+                    {
+                        fligthServices.Add(
+                                _fligthServiceRepository.Single(
+                            x => x.FligthServiceId == fligthService.FligthServiceId,
+                            ioEx => throw new FligthServiceSingleException(fligthService.FligthServiceId.Value))
+                            );
+                    }
+                    fligthToUpdate.FligthServices = fligthServices;
 
                     _fligthRepository.Update(fligthToUpdate);
 

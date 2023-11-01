@@ -5,37 +5,35 @@ namespace APIBaseTemplateUnitTests.Business
 {
     public class CityBusinessTest : BaseTest
     {
+        private static WonkaDataset _wonkaDataset = new WonkaDataset();
+        private static Random _rnd = new Random();
+
         public static IEnumerable<object[]> GetCityData()
         {
-            var wonkaDataset = new WonkaDataset();
-            var rnd = new Random();
+            var cityId = _rnd.Next(_wonkaDataset.Cities.Count());
+            yield return new object[] { _wonkaDataset.Cities.ElementAt(cityId).CityId, _wonkaDataset.Cities.ElementAt(cityId) };
 
-            var cityId = rnd.Next(wonkaDataset.Cities.Count());
-            yield return new object[] { wonkaDataset.Cities.ElementAt(cityId).CityId, wonkaDataset.Cities.ElementAt(cityId) };
+            cityId = _rnd.Next(_wonkaDataset.Cities.Count());
+            yield return new object[] { _wonkaDataset.Cities.ElementAt(cityId).CityId, _wonkaDataset.Cities.ElementAt(cityId) };
 
-            cityId = rnd.Next(wonkaDataset.Cities.Count());
-            yield return new object[] { wonkaDataset.Cities.ElementAt(cityId).CityId, wonkaDataset.Cities.ElementAt(cityId) };
-
-            cityId = rnd.Next(wonkaDataset.Cities.Count());
-            yield return new object[] { wonkaDataset.Cities.ElementAt(cityId).CityId, wonkaDataset.Cities.ElementAt(cityId) };
+            cityId = _rnd.Next(_wonkaDataset.Cities.Count());
+            yield return new object[] { _wonkaDataset.Cities.ElementAt(cityId).CityId, _wonkaDataset.Cities.ElementAt(cityId) };
         }
 
         [Fact]
         public void Create_City()
         {
             // Arrange
-            var wonkaDataset = new WonkaDataset();
-            var rnd = new Random();
             var business = CreateBusiness();
 
             MockData.RegionRepository
                 .Setup(r => r.Query())
-                .Returns(() => wonkaDataset.Regions);
+                .Returns(() => _wonkaDataset.Regions);
 
             var newDto = new APIBaseTemplate.Datamodel.DTO.City()
             {
                 Name = "New city name",
-                RegionId = wonkaDataset.Regions.ElementAt(rnd.Next(wonkaDataset.Regions.Count())).RegionId,
+                RegionId = _wonkaDataset.Regions.ElementAt(_rnd.Next(_wonkaDataset.Regions.Count())).RegionId,
             };
 
             // Act
@@ -54,14 +52,12 @@ namespace APIBaseTemplateUnitTests.Business
         public void Delete_City()
         {
             // Arrange
-            var wonkaDataset = new WonkaDataset();
-            var rnd = new Random();
             var business = CreateBusiness();
-            var entityToDelete = wonkaDataset.Cities.ElementAt(rnd.Next(wonkaDataset.Cities.Count())).CityId;
+            var entityToDelete = _wonkaDataset.Cities.ElementAt(_rnd.Next(_wonkaDataset.Cities.Count())).CityId;
 
             MockData.CityRepository
                 .Setup(r => r.Query())
-                .Returns(() => wonkaDataset.Cities);
+                .Returns(() => _wonkaDataset.Cities);
 
             // Act
             business.Delete(entityToDelete);
@@ -74,16 +70,14 @@ namespace APIBaseTemplateUnitTests.Business
         public void Update_City()
         {
             // Arrange
-            var wonkaDataset = new WonkaDataset();
-            var rnd = new Random();
             var business = CreateBusiness();
 
             // save a copy of object being modified
-            var originalDbItem = Clone(wonkaDataset.Cities.ElementAt(rnd.Next(wonkaDataset.Cities.Count())));
+            var originalDbItem = Clone(_wonkaDataset.Cities.ElementAt(_rnd.Next(_wonkaDataset.Cities.Count())));
 
-            var region = wonkaDataset.Regions
+            var region = _wonkaDataset.Regions
                 .Where(x => x.RegionId != originalDbItem.RegionId)
-                .ElementAt(rnd.Next(wonkaDataset.Regions.Count() - 1));
+                .ElementAt(_rnd.Next(_wonkaDataset.Regions.Count() - 1));
             var modifiedDtoItem = new APIBaseTemplate.Datamodel.DTO.City()
             {
                 CityId = originalDbItem.CityId,
@@ -93,10 +87,10 @@ namespace APIBaseTemplateUnitTests.Business
 
             MockData.CityRepository
                 .Setup(r => r.Query())
-                .Returns(() => wonkaDataset.Cities.Where(r => r.CityId == originalDbItem.CityId));
+                .Returns(() => _wonkaDataset.Cities.Where(r => r.CityId == originalDbItem.CityId));
             MockData.RegionRepository
                 .Setup(r => r.Query())
-                .Returns(() => wonkaDataset.Regions.Where(r => r.RegionId == region.RegionId));
+                .Returns(() => _wonkaDataset.Regions.Where(r => r.RegionId == region.RegionId));
 
             // Act
             var updatedDtoItem = business.Update(modifiedDtoItem);
@@ -115,16 +109,14 @@ namespace APIBaseTemplateUnitTests.Business
         public void Get_City_by_Id(int cityId, APIBaseTemplate.Datamodel.DbEntities.City expectedDbItem)
         {
             // Arrange
-            var wonkaDataset = new WonkaDataset();
-            var rnd = new Random();
             var business = CreateBusiness();
 
             MockData.CityRepository
                 .Setup(r => r.Get(It.IsAny<APIBaseTemplate.Datamodel.DTO.SearchCityRequest>()))
-                .Returns(() => wonkaDataset.Cities.Where(v => v.CityId == cityId));
+                .Returns(() => _wonkaDataset.Cities.Where(v => v.CityId == cityId));
 
             // Act
-            var retrievedDtoItem = business.GetById(wonkaDataset.Cities.ElementAt(rnd.Next(wonkaDataset.Cities.Count())).CityId);
+            var retrievedDtoItem = business.GetById(cityId);
             var retrievedConvertedDbItem = APIBaseTemplate.Datamodel.Mappers.Mappers.City.ToDb(retrievedDtoItem);
 
             // Assert
