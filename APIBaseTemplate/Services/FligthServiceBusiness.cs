@@ -63,7 +63,7 @@ namespace APIBaseTemplate.Services
         string[] GetSortingParameters();
     }
 
-    public class FligthServiceBusiness
+    public class FligthServiceBusiness : IFligthServiceBusiness
     {
         private readonly ILogger<FligthServiceBusiness> _logger;
         private readonly IUnitOfWorkFactory _uof;
