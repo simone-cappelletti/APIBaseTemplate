@@ -1,6 +1,6 @@
 # APIBaseTemplate
 ## :book: Introduction
-As written on my personale README page, **APIBaseTemplate** is a project that shows how I would go about structuring and managing a basic API for a project with no special requirements. So the project includes a little bit of all the common needs that I found myself dealing with over time, from database management, authentication, authorization, logging, and so on.
+As written on my personal README page, **APIBaseTemplate** is a project that shows how I would go about structuring and managing a basic API for a project with no special requirements. So the project includes a little bit of all the common needs that I found myself dealing with over time, from database management, authentication, authorization, logging, and so on.
 
 During development, I will document my decisions and try to understand the reasoning behind them.
 
@@ -24,4 +24,11 @@ Still on the data layer, we have the entities that are part of the project. In t
 
 ### :bulb: Other data layer features
 - **Support to logical deletion**: I often see entities that are deleted logically rather than physically from the database, so I decided to add support for logical deletion by overriding the SaveChanges method of the DbContext and taking advantage of a supporting interface called *IDeletableEntity*.
-- **Enum comment**: In the extension methods calss, *Extensions.cs*, I added a method called *HasEnumComment* that can automatically generate a comment in the database, a description for those columns that are mapped to enums. The description contains the list of possible values.
+- **Enum comment**: In the extension methods class, *Extensions.cs*, I added a method called *HasEnumComment* that can automatically generate a comment in the database, a description for those columns that are mapped to enums. The description contains the list of possible values.
+
+## :books: Business layer
+In the services directory there are all the necessary services holding the business logic and something extra, in particular:
+- *Business classes*: One for each entity, which will be used by the controllers to execute the logic (e.g *AirlineBusiness.cs*, *AirportBusiness.cs*, *FligthBusiness.cs* and so on). This is the intermediate level between the controller and the repository to which all actual logic is located.
+- *ProducesResponseTypeConvention.cs*: This is a class which I use as convention to add some default http status on the action. I find it easy and useful to add by default some http status codes, also because for semplicity's sake not many http status codes are usually used and in this way I don't need to add the ProducesResponseTypeAttribute every time manually.
+
+## :ghost: Common
