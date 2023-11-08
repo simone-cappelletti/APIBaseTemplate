@@ -29,8 +29,8 @@ namespace APIBaseTemplate.Controllers
         }
 
         /// <inheritdoc/>
-        [HttpPost]
         [Route("search")]
+        [HttpGet]
         public ResponseOf<PagedResult<Region>> Search(SearchRegionRequest request)
         {
             _logger.LogTrace($"{nameof(Search)}");
@@ -45,7 +45,7 @@ namespace APIBaseTemplate.Controllers
 
         /// <inheritdoc/>
         [Route("get")]
-        [HttpPost]
+        [HttpGet]
         public ResponseOf<Region> GetById([FromBody] RequestOf<EntityNumberIdParam> request)
         {
             _logger.LogTrace($"{nameof(GetById)}");
@@ -60,7 +60,7 @@ namespace APIBaseTemplate.Controllers
 
         /// <inheritdoc/>
         [Route("sortingParameters")]
-        [HttpPost]
+        [HttpGet]
         public ResponseOf<List<string>> GetSortingParameters()
         {
             _logger.LogTrace($"{nameof(GetSortingParameters)}");
@@ -90,7 +90,7 @@ namespace APIBaseTemplate.Controllers
 
         /// <inheritdoc/>
         [Route("delete")]
-        [HttpPost]
+        [HttpDelete]
         public Response Delete([FromBody] RequestOf<EntityNumberIdParam> req)
         {
             _logger.LogTrace($"{nameof(Delete)}");

@@ -10,7 +10,7 @@ namespace APIBaseTemplate.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class FligthServiceController
+    public class FligthServiceController : IController<FligthService>
     {
         private readonly ILogger<FligthServiceController> _logger;
         private readonly IFligthServiceBusiness _business;
@@ -40,8 +40,8 @@ namespace APIBaseTemplate.Controllers
         /// </returns>
         /// <remarks>
         /// </remarks>
-        [HttpPost]
         [Route("search")]
+        [HttpGet]
         public ResponseOf<PagedResult<FligthService>> Search(SearchFligthServiceRequest request)
         {
             _logger.LogTrace($"{nameof(Search)}");
@@ -54,13 +54,9 @@ namespace APIBaseTemplate.Controllers
             return response;
         }
 
-        /// <summary>
-        /// Return specific <see cref="FligthService"/> by id
-        /// </summary>
-        /// <param name="request">FligthServiceId</param>
-        /// <returns>FligthService with details</returns>
+        /// <inheritdoc/>
         [Route("get")]
-        [HttpPost]
+        [HttpGet]
         public ResponseOf<FligthService> GetById([FromBody] RequestOf<EntityNumberIdParam> request)
         {
             _logger.LogTrace($"{nameof(GetById)}");
@@ -73,12 +69,9 @@ namespace APIBaseTemplate.Controllers
             return response;
         }
 
-        /// <summary>
-        /// Returns available sorting parameters
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         [Route("sortingParameters")]
-        [HttpPost]
+        [HttpGet]
         public ResponseOf<List<string>> GetSortingParameters()
         {
             _logger.LogTrace($"{nameof(GetSortingParameters)}");
@@ -91,15 +84,7 @@ namespace APIBaseTemplate.Controllers
             return response;
         }
 
-        /// <summary>
-        /// Save a <see cref="FligthService"/>
-        /// </summary>
-        /// <param name="request">item to update or insert</param>
-        /// <remarks>
-        /// If <see cref="FligthService.FligthServiceId"/> has a value an update will be performed.
-        /// If <see cref="FligthService.FligthServiceId"/> doesn't have value an insert will be performed.
-        /// </remarks>
-        /// <returns>The updated/inserted <see cref="FligthService"/> </returns>
+        /// <inheritdoc/>
         [Route("save")]
         [HttpPost]
         public ResponseOf<FligthService> Save([FromBody] RequestOf<FligthService> request)
@@ -114,13 +99,9 @@ namespace APIBaseTemplate.Controllers
             return response;
         }
 
-        /// <summary>
-        /// Delete an <see cref="FligthService"/>
-        /// </summary>
-        /// <param name="req">The FligthService that must be deleted</param>
-        /// <returns>Empty response if ok</returns>
+        /// <inheritdoc/>
         [Route("delete")]
-        [HttpPost]
+        [HttpDelete]
         public Response Delete([FromBody] RequestOf<EntityNumberIdParam> req)
         {
             _logger.LogTrace($"{nameof(Delete)}");

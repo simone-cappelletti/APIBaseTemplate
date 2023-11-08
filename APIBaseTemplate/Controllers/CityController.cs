@@ -10,7 +10,7 @@ namespace APIBaseTemplate.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class CityController
+    public class CityController : IController<City>
     {
         private readonly ILogger<CityController> _logger;
         private readonly ICityBusiness _business;
@@ -40,8 +40,8 @@ namespace APIBaseTemplate.Controllers
         /// </returns>
         /// <remarks>
         /// </remarks>
-        [HttpPost]
         [Route("search")]
+        [HttpGet]
         public ResponseOf<PagedResult<City>> Search(SearchCityRequest request)
         {
             _logger.LogTrace($"{nameof(Search)}");
@@ -54,13 +54,9 @@ namespace APIBaseTemplate.Controllers
             return response;
         }
 
-        /// <summary>
-        /// Return specific <see cref="City"/> by id
-        /// </summary>
-        /// <param name="request">CityId</param>
-        /// <returns>City with details</returns>
+        /// <inheritdoc/>
         [Route("get")]
-        [HttpPost]
+        [HttpGet]
         public ResponseOf<City> GetById([FromBody] RequestOf<EntityNumberIdParam> request)
         {
             _logger.LogTrace($"{nameof(GetById)}");
@@ -73,12 +69,9 @@ namespace APIBaseTemplate.Controllers
             return response;
         }
 
-        /// <summary>
-        /// Returns available sorting parameters
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         [Route("sortingParameters")]
-        [HttpPost]
+        [HttpGet]
         public ResponseOf<List<string>> GetSortingParameters()
         {
             _logger.LogTrace($"{nameof(GetSortingParameters)}");
@@ -91,15 +84,7 @@ namespace APIBaseTemplate.Controllers
             return response;
         }
 
-        /// <summary>
-        /// Save a <see cref="City"/>
-        /// </summary>
-        /// <param name="request">item to update or insert</param>
-        /// <remarks>
-        /// If <see cref="City.CityId"/> has a value an update will be performed.
-        /// If <see cref="City.CityId"/> doesn't have value an insert will be performed.
-        /// </remarks>
-        /// <returns>The updated/inserted <see cref="City"/> </returns>
+        /// <inheritdoc/>
         [Route("save")]
         [HttpPost]
         public ResponseOf<City> Save([FromBody] RequestOf<City> request)
@@ -114,13 +99,9 @@ namespace APIBaseTemplate.Controllers
             return response;
         }
 
-        /// <summary>
-        /// Delete an <see cref="City"/>
-        /// </summary>
-        /// <param name="req">The City that must be deleted</param>
-        /// <returns>Empty response if ok</returns>
+        /// <inheritdoc/>
         [Route("delete")]
-        [HttpPost]
+        [HttpDelete]
         public Response Delete([FromBody] RequestOf<EntityNumberIdParam> req)
         {
             _logger.LogTrace($"{nameof(Delete)}");

@@ -1,4 +1,5 @@
 using APIBaseTemplate.Common;
+using APIBaseTemplate.Repositories;
 using APIBaseTemplate.Services;
 using Microsoft.OpenApi.Models;
 
@@ -29,6 +30,25 @@ builder.Services.AddSwaggerGen(options =>
         });
 });
 builder.Services.AddAPIBaseTemplateDbContext(builder.Configuration);
+
+
+builder.Services.AddScoped<ICityRepository, CityRepository>();
+builder.Services.AddScoped<ICityBusiness, CityBusiness>();
+
+builder.Services.AddScoped<IRegionRepository, RegionRepository>();
+builder.Services.AddScoped<IRegionBusiness, RegionBusiness>();
+
+builder.Services.AddScoped<IAirlineRepository, AirlineRepository>();
+builder.Services.AddScoped<IAirlineBusiness, AirlineBusiness>();
+
+builder.Services.AddScoped<IAirportRepository, AirportRepository>();
+builder.Services.AddScoped<IAirportBusiness, AirportBusiness>();
+
+builder.Services.AddScoped<IFligthRepository, FligthRepository>();
+builder.Services.AddScoped<IFligthBusiness, FligthBusiness>();
+
+builder.Services.AddScoped<IFligthServiceRepository, FligthServiceRepository>();
+builder.Services.AddScoped<IFligthServiceBusiness, FligthServiceBusiness>();
 
 var app = builder.Build();
 

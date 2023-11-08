@@ -67,7 +67,7 @@ namespace APIBaseTemplate.Controllers
                     Name = "Linate"
                 };
 
-                var romeMialnFligth = new Fligth()
+                var romeMilanFligth = new Fligth()
                 {
 
                 };
@@ -84,12 +84,6 @@ namespace APIBaseTemplate.Controllers
                 uof.SaveChanges();
                 uof.CompleteTransactionScope();
             }
-        }
-
-        [HttpPost]
-        public void Test([FromBody] Airline airline)
-        {
-
         }
     }
 }

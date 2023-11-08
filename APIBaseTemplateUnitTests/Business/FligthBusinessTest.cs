@@ -26,7 +26,7 @@ namespace APIBaseTemplateUnitTests.Business
         {
             // Arrange
             var business = CreateBusiness();
-            var departureTime = DateTime.Now;
+            var departureTime = DateTime.UtcNow;
             var arrivalTime = departureTime.AddHours(2);
 
             MockData.FligthRepository
@@ -100,7 +100,7 @@ namespace APIBaseTemplateUnitTests.Business
         {
             // Arrange
             var business = CreateBusiness();
-            var departureTime = DateTime.Now;
+            var departureTime = DateTime.UtcNow;
             var arrivalTime = departureTime.AddHours(2);
 
             // save a copy of object being modified

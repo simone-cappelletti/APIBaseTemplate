@@ -43,7 +43,7 @@ namespace APIBaseTemplate.Common
         /// Suggested http Status Code (400, 500, ...) for rest return.
         /// </summary>
         /// <remarks>
-        /// Default value is <see cref="HttpStatusCode.BadRequest"/>
+        /// Default value is <see cref="HttpStatusCode.InternalServerError"/>
         /// </remarks>
         public HttpStatusCode? HttpStatus { get; protected set; } = HttpStatusCode.InternalServerError;
 
