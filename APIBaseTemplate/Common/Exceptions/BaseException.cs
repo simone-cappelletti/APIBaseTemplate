@@ -56,12 +56,12 @@ namespace APIBaseTemplate.Common
         /// <param name="errorCode"></param>
         /// <param name="data">
         /// Additional parameters.
-        /// Parameters which are public can be sent to external client
+        /// Parameters which are public can be sent to external client.
         /// </param>
         /// <example>
-        /// new BaseException($"Name {company.CompanyName} already used",
+        /// new BaseException($"Name {fligth.FligthCode} already used",
         ///                   Constants.GenericErrorCodes.ITEM_ALREADY_EXISTS,
-        ///                   ("companyName", "companyName1", ParamVisibility.Public), 
+        ///                   ("fligthCode", "fligthCode1", ParamVisibility.Public), 
         ///                   ("anotherParameterName", "parameter2", ParamVisibility.Public))
         /// </example>
         public BaseException(
@@ -121,8 +121,7 @@ namespace APIBaseTemplate.Common
         #endregion ctors
 
         /// <summary>
-        /// From 3-tuple <paramref name="errorParameters"/> initialize <see cref="PublicErrorCodeParameters"/> and
-        /// <see cref="PublicAndPrivateErrorCodeParameters"/>
+        /// From 3-tuple <paramref name="errorParameters"/> initialize <see cref="PublicErrorCodeParameters"/> and <see cref="PublicAndPrivateErrorCodeParameters"/>
         /// </summary>
         /// <param name="errorParameters"></param>
         protected void InitErrorCodeParameters((string parameterName, object? parameterValue, Visibility visibility)[] errorParameters)
@@ -138,14 +137,13 @@ namespace APIBaseTemplate.Common
                 if (errorParameter.visibility == Visibility.Private)
                 {
                     // Visibility.Private error parameter:
-                    // goes only in PublicAndPrivateErrorCodeParameters
+                    // goes only in PublicAndPrivateErrorCodeParameters.
                     PublicAndPrivateErrorCodeParameters.Add(errorParameter.Item1, errorParameter.Item2 ?? "");
                 }
                 else
                 {
                     // Visibility.Public error parameter:
-                    // goes in both collections PublicAndPrivateErrorCodeParameters 
-                    // and PublicErrorCodeParameters
+                    // goes in both collections PublicAndPrivateErrorCodeParameters and PublicErrorCodeParameters.
                     PublicErrorCodeParameters.Add(errorParameter.Item1, errorParameter.Item2 ?? "");
                     PublicAndPrivateErrorCodeParameters.Add(errorParameter.Item1, errorParameter.Item2 ?? "");
                 }
@@ -159,7 +157,7 @@ namespace APIBaseTemplate.Common
     public enum Visibility
     {
         /// <summary>
-        /// Should be maintaned private (e.g. visibile only in server-side log, console output)
+        /// Should be maintained private (e.g. visibile only in server-side log, console output)
         /// </summary>
         Private = 0,
 

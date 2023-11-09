@@ -6,7 +6,7 @@
             string fieldName,
             object fieldValue
             ) : base(
-                message: $"Field {fieldName} value already used",
+                $"Field {fieldName} value already used",
                 FligthErrorCodes.DUPLICATE_ERROR,
                 (nameof(fieldName), fieldName, Visibility.Public),
                 (nameof(fieldValue), fieldValue, Visibility.Private)

@@ -54,7 +54,7 @@ namespace APIBaseTemplate.Common
         }
 
         /// <summary>
-        /// Autogenerates a comment that contains all valid values of the enum
+        /// Autogenerates a comment that contains all valid values of the enum.
         /// </summary>
         /// <typeparam name="TEnum">enum sul quale generare il commento</typeparam>
         /// <param name="propertyBuilder"></param>
@@ -201,7 +201,7 @@ namespace APIBaseTemplate.Common
     public static class QueryableExtensions
     {
         /// <summary>
-        /// Apply the Text Filter if not null, using the lambda indicated
+        /// Apply the Text Filter if not null, using the lambda indicated.
         /// </summary>
         /// <typeparam name="T">Entity type</typeparam>
         /// <param name="query">the query to filter</param>
@@ -350,7 +350,7 @@ namespace APIBaseTemplate.Common
         }
 
         /// <summary>
-        /// Apply Skip/Take stuff using a <see cref="IPaginated"/> filter
+        /// Apply Skip/Take stuff using a <see cref="IPaginated"/> filter.
         /// </summary>
         /// <typeparam name="TSource">the Entity Type</typeparam>
         /// <param name="query">the query</param>
@@ -364,7 +364,8 @@ namespace APIBaseTemplate.Common
                 paginationOptions.PageIndex.Value >= 0 &&
                 paginationOptions.PageSize > 0)
             {
-                return query.Skip(paginationOptions.PageIndex.Value * paginationOptions.PageSize)
+                return query
+                    .Skip(paginationOptions.PageIndex.Value * paginationOptions.PageSize)
                     .Take(paginationOptions.PageSize);
             }
             else
@@ -391,8 +392,7 @@ namespace APIBaseTemplate.Common
                 => filter.OrderBy(query, orderBy, defaultOrderBy);
 
         /// <summary>
-        /// Applies DateTime filter <see cref="DateTimeFilter"/>
-        /// using provided lambdas
+        /// Applies DateTime filter <see cref="DateTimeFilter"/> using provided lambdas.
         /// </summary>
         /// <typeparam name="T">Entity type</typeparam>
         /// <param name="query">the query to filter</param>
@@ -467,13 +467,13 @@ namespace APIBaseTemplate.Common
     public static class IRepositoryExtensions
     {
         /// <summary>
-        /// It returns the only element that satisfies the predicate or exception if specified
+        /// It returns the only element that satisfies the predicate or exception if specified.
         /// </summary>
         /// <param name="predicate">search filter</param>
         /// <param name="onException">
-        /// callback to invoke the specified exception or the default exception InvalidOperationException
+        /// Callback to invoke the specified exception or the default exception InvalidOperationException.
         /// </param>
-        /// <returns>single element</returns>
+        /// <returns>Single element</returns>
         public static TEntity Single<TEntity>(
             this IRepository<TEntity> repository,
             Expression<Func<TEntity, bool>> predicate,
@@ -498,13 +498,13 @@ namespace APIBaseTemplate.Common
         }
 
         /// <summary>
-        /// Return single element that satisfy the predicate or null
+        /// Return single element that satisfy the predicate or null.
         /// </summary>
         /// <param name="predicate">search filter</param>
         /// <param name="onException">
-        /// callback to invoke the specified exception or the default exception InvalidOperationException
+        /// Callback to invoke the specified exception or the default exception InvalidOperationException.
         /// </param>
-        /// <returns>single element</returns>
+        /// <returns>Single element</returns>
         public static TEntity? SingleOrDefault<TEntity>(
             this IRepository<TEntity> repository,
             Expression<Func<TEntity, bool>> predicate,
