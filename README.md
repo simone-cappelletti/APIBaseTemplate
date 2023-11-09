@@ -27,8 +27,15 @@ Still on the data layer, we have the entities that are part of the project. In t
 - **Enum comment**: In the extension methods class, *Extensions.cs*, I added a method called *HasEnumComment* that can automatically generate a comment in the database, a description for those columns that are mapped to enums. The description contains the list of possible values.
 
 ## :books: Business layer
-In the services directory there are all the necessary services holding the business logic and something extra, in particular:
-- *Business classes*: One for each entity, which will be used by the controllers to execute the logic (e.g *AirlineBusiness.cs*, *AirportBusiness.cs*, *FligthBusiness.cs* and so on). This is the intermediate level between the controller and the repository to which all actual logic is located.
-- *ProducesResponseTypeConvention.cs*: This is a class which I use as convention to add some default http status on the action. I find it easy and useful to add by default some http status codes, also because for semplicity's sake not many http status codes are usually used and in this way I don't need to add the ProducesResponseTypeAttribute every time manually.
+In the Services folder there are all the necessary services holding the business logic and something extra, in particular:
+- **Business classes**: One for each entity, which will be used by the controllers to execute the logic (e.g *AirlineBusiness.cs*, *AirportBusiness.cs*, *FligthBusiness.cs* and so on). This is the intermediate level between the controller and the repository to which all actual logic is located.
+- **ProducesResponseTypeConvention.cs**: This is a class which I use as convention to add some default http status on the action. I find it easy and useful to add by default some http status codes, also because for semplicity's sake not many http status codes are usually used and in this way I don't need to add the ProducesResponseTypeAttribute every time manually.
 
-## :ghost: Common
+## :ghost: Common stuff
+There are some common things in the Common folder that I implement in most projects like:
+- **Exception handling**: As you can see in the Common\Exceptions folder I added some classes related to exception handling, in particular:
+  - *BaseExeption.cs*: This is my base exception class from which all the others are derived. This class allows me to manage some generic error aspects like the http status code to be returned, an error code in the form of a string (see *GenericErrorCodes.cs*), some public or private parameters, a simple timestamp and so on...
+  - All the exceptions of the entity: For each entity I implement different kind of exceptions (e.g *FligthDeleteException.cs*, *FligthDuplicateException.cs* ...) and this allows me to personalise the properties defined in the BaseException class for each exception.
+- **Request pagination**: The base class for pagination is *PaginatedSearchRequest.cs* which defines two properties such as page size and the page index. These properties allow me to perform some pagination with the Skip and Take function (see *QueryableExtensions.cs* class, ApplyPagination method).
+- **Request filtering**:
+- **Request sorting**:
