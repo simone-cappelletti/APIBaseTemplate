@@ -1,7 +1,7 @@
 ﻿namespace APIBaseTemplate.Common
 {
     /// <summary>
-    /// Order by Asc/Desc
+    /// Order by Asc/Desc.
     /// </summary>
     public enum EnmOrderBy
     {
@@ -10,7 +10,7 @@
     }
 
     /// <summary>
-    /// Sort field Asc/Desc
+    /// Sort field Asc/Desc.
     /// </summary>
     public class OrderByOption
     {
@@ -28,7 +28,7 @@
         public static readonly OrderByOption[] EmptyOptionList = new OrderByOption[] { };
 
         /// <summary>
-        /// Field label to be ordered
+        /// Field label to be ordered.
         /// </summary>
         public string Field { set; get; }
 

@@ -4,7 +4,7 @@ using System.Reflection;
 namespace APIBaseTemplate.Common
 {
     /// <summary>
-    /// Class to simplify sorting columns in grids..
+    /// Class to simplify sorting columns in grids.
     /// </summary>
     /// <typeparam name="TSource"></typeparam>
     public class OrderByFilter<TSource>
@@ -233,6 +233,5 @@ namespace APIBaseTemplate.Common
 
             return result;
         }
-
     }
 }
