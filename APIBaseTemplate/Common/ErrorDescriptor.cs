@@ -1,7 +1,7 @@
 ﻿namespace APIBaseTemplate.Common
 {
     /// <summary>
-    /// Describe an error encountered
+    /// Describe an error encountered.
     /// </summary>
     public class ErrorDescriptor
     {
@@ -26,10 +26,10 @@
         );
 
         /// <summary>
-        /// An identifier for this error case
+        /// An identifier for this error case.
         /// </summary>
         /// <remarks>
-        /// Helps to this incident among application log
+        /// Helps to this incident among application log.
         /// </remarks>
         public string ErrorCaseId { get; set; }
 
@@ -37,12 +37,12 @@
         /// Distributed context identifier
         /// </summary>
         /// <remarks>
-        /// A client-generated identifier which eventually ties together several server requests
+        /// A client-generated identifier which eventually ties together several server requests.
         /// </remarks>
         public string DistribuitedContextId { get; set; }
 
         /// <summary>
-        /// A string error code which is also a translation key
+        /// A string error code which is also a translation key.
         /// </summary>
         /// <example>
         /// itemNotFound
@@ -50,7 +50,7 @@
         public string ErrorCode { get; set; }
 
         /// <summary>
-        /// Information about error origin
+        /// Information about error origin.
         /// </summary>
         public string? ErrorOrigin { get; set; }
 

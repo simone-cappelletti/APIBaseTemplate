@@ -6,6 +6,7 @@ using APIBaseTemplate.Repositories.UnitOfWork;
 using APIBaseTemplate.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.Extensions.Primitives;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -37,6 +38,10 @@ namespace APIBaseTemplate.Common
             serviceCollection.AddUnitOfWorkPattern();
         }
 
+        /// <summary>
+        /// Add unit of work factory.
+        /// </summary>
+        /// <param name="serviceCollection"></param>
         private static void AddUnitOfWorkPattern(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddTransient<IUnitOfWorkFactory, UnitOfWorkFactory>(serviceProvider =>
@@ -51,6 +56,15 @@ namespace APIBaseTemplate.Common
             });
 
             serviceCollection.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
+        }
+
+        /// <summary>
+        /// Add exception handling middleware.
+        /// </summary>
+        /// <param name="app"></param>
+        public static void UseExceptionHandlingMiddleware(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
         }
 
         /// <summary>
@@ -652,5 +666,30 @@ namespace APIBaseTemplate.Common
                 }
             }
         }
+    }
+
+    public static class ExceptionHandlingMiddlewareExtensions
+    {
+        /// <summary>
+        /// Return the first value for the header <see cref="Constants.HeaderConstants.DISTRIBUITED_CONTEXT_ID_HEADER_NAME"/>
+        /// in the request for the given <paramref name="httpContext"/>
+        /// </summary>
+        /// <param name="httpContext"></param>
+        /// <returns></returns>
+        public static string GetDistribuitedContextIdHeader(this HttpContext httpContext)
+        {
+            string distCtxId = null;
+
+            if (httpContext.Request.Headers.TryGetValue(HeaderConstants.DISTRIBUITED_CONTEXT_ID_HEADER_NAME, out StringValues stringValues))
+            {
+                if (stringValues.Count > 0)
+                {
+                    distCtxId = stringValues[0];
+                }
+            }
+
+            return distCtxId;
+        }
+
     }
 }

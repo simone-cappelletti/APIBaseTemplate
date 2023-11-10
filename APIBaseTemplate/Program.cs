@@ -52,10 +52,11 @@ builder.Services.AddScoped<IFligthServiceBusiness, FligthServiceBusiness>();
 
 var app = builder.Build();
 
+app.UseExceptionHandlingMiddleware();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
