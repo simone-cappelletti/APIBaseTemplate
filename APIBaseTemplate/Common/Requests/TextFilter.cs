@@ -114,7 +114,7 @@ namespace APIBaseTemplate.Common
         private static readonly string[] STRING_VALUES_SEPARATORS = new string[] { "\n", "\r\n" };
 
         /// <summary>
-        /// Selected oeprator
+        /// Selected operator
         /// </summary>
         public EnmTextFilterOperator Operator { get; set; }
 
@@ -129,7 +129,8 @@ namespace APIBaseTemplate.Common
 
         ///<inheritdoc/>
         [JsonIgnore]
-        public EnmFilterTypes FilterType => EnmFilterTypes.Text;
+        public EnmFilterTypes FilterType
+            => EnmFilterTypes.Text;
 
         /// <summary>
         /// Returns string values contained in <see cref="Value"/>
@@ -144,6 +145,11 @@ namespace APIBaseTemplate.Common
             }
         }
 
+        private static readonly string[] FILTER_NAMES_SUPPORTING_IN_VALUES_OPERATOR = new string[]
+        {
+
+        };
+
         /// <summary>
         /// Returns a simply sanitized copy of the <see cref="Value"/> property
         /// </summary>
@@ -152,11 +158,6 @@ namespace APIBaseTemplate.Common
         /// <returns>a simply sanitized copy of the <see cref="Value"/> property</returns>
         public string? GetSimpleSanitizedValue(EnmSimpleTextFilterSanitize simpleSanitize) =>
             TextSanitizerHelper.SanitizeTextSimply(this.Value, simpleSanitize);
-
-        private static readonly string[] FILTER_NAMES_SUPPORTING_IN_VALUES_OPERATOR = new string[]
-        {
-
-        };
 
         /// <inheritdoc/>
         public void Validate(string? filterName = null)
@@ -202,6 +203,5 @@ namespace APIBaseTemplate.Common
                     break;
             }
         }
-
     }
 }

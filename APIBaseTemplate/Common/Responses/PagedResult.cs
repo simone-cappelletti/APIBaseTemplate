@@ -13,7 +13,7 @@
         public List<T> Items { get; set; } = new List<T>();
 
         /// <summary>
-        /// Sortings criteria if nedded
+        /// Sortings criteria if needed.
         /// </summary>
         public List<OrderByOption> Sortings { get; set; } = new List<OrderByOption>();
 
@@ -23,17 +23,17 @@
         public int? CurrentPageIndex { get; set; }
 
         /// <summary>
-        /// Page sizse
+        /// Page size
         /// </summary>
         public int CurrentPageSize { get; set; }
 
         /// <summary>
-        /// Totale records number without pagination
+        /// Totale records number without pagination.
         /// </summary>
         public long? TotalRecordsWithoutPagination { get; set; }
 
         /// <summary>
-        /// Total pages considering the current page size
+        /// Total pages considering the current page size.
         /// </summary>
         public long? TotalPages
         {

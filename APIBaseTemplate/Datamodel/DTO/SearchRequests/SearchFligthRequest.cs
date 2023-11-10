@@ -23,7 +23,7 @@ namespace APIBaseTemplate.Datamodel.DTO
         /// <summary>
         /// Search on <see cref="Fligth.Code"/>
         /// </summary>
-        public TextFilter Code { get; set; }
+        public TextFilter? Code { get; set; }
 
         /// <summary>
         /// Search on <see cref="Fligth.AirlineId"/>
@@ -43,22 +43,22 @@ namespace APIBaseTemplate.Datamodel.DTO
         /// <summary>
         /// Search on <see cref="Fligth.DepartureTime"/>
         /// </summary>
-        public DateTimeFilter DepartureTime { get; set; }
+        public DateTimeFilter? DepartureTime { get; set; }
 
         /// <summary>
         /// Search on <see cref="Fligth.ArrivalTime"/>
         /// </summary>
-        public DateTimeFilter ArrivalTime { get; set; }
+        public DateTimeFilter? ArrivalTime { get; set; }
 
         /// <summary>
         /// Search on <see cref="Fligth.Terminal"/>
         /// </summary>
-        public TextFilter Terminal { get; set; }
+        public TextFilter? Terminal { get; set; }
 
         /// <summary>
         /// Search on <see cref="Fligth.Gate"/>
         /// </summary>
-        public TextFilter Gate { get; set; }
+        public TextFilter? Gate { get; set; }
     }
 
     /// <summary>

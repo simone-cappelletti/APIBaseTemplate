@@ -69,7 +69,6 @@ namespace APIBaseTemplate.Common
         /// (e.g. when using <see cref="EnmDateTimeFilterOperators.Between"/> operator)
         /// </summary>
         public DateTime? Value2 { get; set; }
-
     }
 
     /// <summary>
@@ -78,7 +77,8 @@ namespace APIBaseTemplate.Common
     public class DateFilter : BaseAbstractDateFilter, IFilter
     {
         [JsonIgnore]
-        public EnmFilterTypes FilterType => EnmFilterTypes.Date;
+        public EnmFilterTypes FilterType
+            => EnmFilterTypes.Date;
 
         /// <summary>
         /// When using <see cref="EnmDateTimeFilterOperators.LessThan"/> then
@@ -103,7 +103,7 @@ namespace APIBaseTemplate.Common
             {
                 if (!Value2.HasValue)
                     throw new InvalidOperationException(
-                        $"With {Operator} a value is required for {nameof(Value2)} proprerty");
+                        $"With {Operator} a value is required for {nameof(Value2)} property");
 
                 Value = DateTimeHelper.MinimizeHourPart(Value);
                 Value2 = DateTimeHelper.MaximizeHourPart(Value2.Value);

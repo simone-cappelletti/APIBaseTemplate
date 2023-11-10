@@ -20,7 +20,7 @@ namespace APIBaseTemplate.Datamodel.DTO
         /// <summary>
         /// Search on <see cref="City.Name"/>
         /// </summary>
-        public TextFilter Name { get; set; }
+        public TextFilter? Name { get; set; }
 
         /// <summary>
         /// Search on <see cref="Region.RegionId"/>

@@ -23,12 +23,12 @@ namespace APIBaseTemplate.Datamodel.DTO
         /// <summary>
         /// Search on <see cref="Airline.Code"/>
         /// </summary>
-        public TextFilter Code { get; set; }
+        public TextFilter? Code { get; set; }
 
         /// <summary>
         /// Search on <see cref="Airline.Name"/>
         /// </summary>
-        public TextFilter Name { get; set; }
+        public TextFilter? Name { get; set; }
 
         /// <summary>
         /// Search on <see cref="Airline.RegionId"/>

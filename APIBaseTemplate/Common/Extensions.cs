@@ -350,48 +350,6 @@ namespace APIBaseTemplate.Common
         }
 
         /// <summary>
-        /// Apply Skip/Take stuff using a <see cref="IPaginated"/> filter.
-        /// </summary>
-        /// <typeparam name="TSource">the Entity Type</typeparam>
-        /// <param name="query">the query</param>
-        /// <param name="paginationOptions">pagination options</param>
-        /// <returns>A paginated IQueryable version of the source or the original query if page index/page size not specified</returns>
-        public static IQueryable<TSource> ApplyPagination<TSource>(
-            this IQueryable<TSource> query,
-            IPaginated paginationOptions)
-        {
-            if (paginationOptions.PageIndex.HasValue &&
-                paginationOptions.PageIndex.Value >= 0 &&
-                paginationOptions.PageSize > 0)
-            {
-                return query
-                    .Skip(paginationOptions.PageIndex.Value * paginationOptions.PageSize)
-                    .Take(paginationOptions.PageSize);
-            }
-            else
-            {
-                return query;
-            }
-        }
-
-        /// <summary>
-        /// Apply to the query the list of orderby given in the orderBy parameter.
-        /// If the list is empty, apply a default sort order.
-        /// </summary>
-        /// <param name="query"></param>
-        /// <param name="filter"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="defaultOrderBy"></param>
-        /// <returns></returns>
-        public static IOrderedQueryable<TSource> OrderBy<TSource>(
-            this IQueryable<TSource> query,
-            OrderByFilter<TSource> filter,
-            IEnumerable<OrderByOption> orderBy,
-            Func<IQueryable<TSource>,
-            IOrderedQueryable<TSource>> defaultOrderBy)
-                => filter.OrderBy(query, orderBy, defaultOrderBy);
-
-        /// <summary>
         /// Applies DateTime filter <see cref="DateTimeFilter"/> using provided lambdas.
         /// </summary>
         /// <typeparam name="T">Entity type</typeparam>
@@ -462,6 +420,173 @@ namespace APIBaseTemplate.Common
             };
             return query;
         }
+
+        /// <summary>
+        /// Applies boolean filter (<see cref="BooleanFilter"/>).
+        /// using provided lambdas
+        /// </summary>
+        /// <typeparam name="T">Entity type</typeparam>
+        /// <param name="query">the query to filter</param>
+        /// <param name="booleanFilterOperator"></param>
+        /// <param name="isNull">Where isNull predicate</param>
+        /// <param name="equalTo">Where equalTo predicate</param>
+        /// <returns></returns>
+        public static IQueryable<T> WhereBooleanFilter<T>(
+            this IQueryable<T> query,
+            EnmBooleanFilterOperators booleanFilterOperator,
+            Expression<Func<T, bool>> isNull,
+            Expression<Func<T, bool>> equalTo
+            )
+        {
+            query = (booleanFilterOperator) switch
+            {
+                EnmBooleanFilterOperators.IsNull =>
+                    isNull != null ?
+                    query.Where(isNull) :
+                    throw new ArgumentNullException(
+                        nameof(isNull),
+                        $"operator {booleanFilterOperator} not expected"),
+
+                EnmBooleanFilterOperators.IsNotNull =>
+                    isNull != null ?
+                    query.Where(isNull.Not()) :
+                    throw new ArgumentNullException(
+                        nameof(isNull),
+                        $"operator {booleanFilterOperator} not expected"),
+
+                EnmBooleanFilterOperators.EqualTo =>
+                    equalTo != null ?
+                    query.Where(equalTo) :
+                    throw new ArgumentNullException(
+                        nameof(equalTo),
+                        $"operator {booleanFilterOperator} not expected"),
+
+                EnmBooleanFilterOperators.NotEqualTo =>
+                    equalTo != null ?
+                    query.Where(equalTo.Not()) :
+                    throw new ArgumentNullException(
+                        nameof(equalTo),
+                        $"operator {booleanFilterOperator} not expected"),
+
+                _ => throw new ArgumentOutOfRangeException(
+                    $"Unsupported value {booleanFilterOperator}"), // unexpected operator
+            };
+            return query;
+        }
+
+        /// <summary>
+        /// Applies numeric filter (<see cref="NumberFilter"/>) if not null, using provided lambdas.
+        /// </summary>
+        /// <typeparam name="T">Entity type</typeparam>
+        /// <param name="query">the query to filter</param>
+        /// <param name="filterOperator"></param>
+        /// <param name="isNull">Where isNull predicate</param>
+        /// <param name="equalTo">Where equalTo predicate</param>
+        /// <param name="lessThan">Where lessThan predicate</param>
+        /// <param name="greaterThan">Where greaterThan predicate</param>
+        /// <param name="between">Where between predicate</param>
+        /// <returns></returns>
+        public static IQueryable<T> WhereNumberFilter<T>(
+            this IQueryable<T> query,
+            EnmNumberFilterOperators filterOperator,
+            Expression<Func<T, bool>> isNull,
+            Expression<Func<T, bool>> equalTo,
+            Expression<Func<T, bool>> lessThan,
+            Expression<Func<T, bool>> greaterThan,
+            Expression<Func<T, bool>> between
+            )
+        {
+            query = (filterOperator) switch
+            {
+                EnmNumberFilterOperators.IsNull =>
+                    isNull != null ?
+                    query.Where(isNull) :
+                    throw new ArgumentNullException(
+                        nameof(isNull),
+                        $"operator {filterOperator} not expected"),
+
+                EnmNumberFilterOperators.EqualTo =>
+                    equalTo != null ?
+                    query.Where(equalTo) :
+                    throw new ArgumentNullException(
+                        nameof(equalTo),
+                        $"operator {filterOperator} not expected"),
+
+                EnmNumberFilterOperators.NotEqualTo =>
+                    equalTo != null ?
+                    query.Where(equalTo.Not()) :
+                    throw new ArgumentNullException(
+                        nameof(equalTo),
+                        $"operator {filterOperator} not expected"),
+
+                EnmNumberFilterOperators.LessThan =>
+                    lessThan != null ?
+                    query.Where(lessThan) :
+                    throw new ArgumentNullException(
+                        nameof(lessThan),
+                        $"operator {filterOperator} not expected"),
+
+                EnmNumberFilterOperators.GreaterThan =>
+                    greaterThan != null ?
+                    query.Where(greaterThan) :
+                    throw new ArgumentNullException(
+                        nameof(greaterThan),
+                        $"operator {filterOperator} not expected"),
+
+                EnmNumberFilterOperators.Between =>
+                    between != null ?
+                    query.Where(between) :
+                    throw new ArgumentNullException(
+                        nameof(between),
+                        $"operator {filterOperator} not expected"),
+
+                _ => throw new ArgumentOutOfRangeException(
+                    $"Unsupported value {filterOperator}"), // unexpected operator
+            };
+            return query;
+        }
+
+        /// <summary>
+        /// Apply Skip/Take stuff using a <see cref="IPaginated"/> filter.
+        /// </summary>
+        /// <typeparam name="TSource">the Entity Type</typeparam>
+        /// <param name="query">the query</param>
+        /// <param name="paginationOptions">pagination options</param>
+        /// <returns>A paginated IQueryable version of the source or the original query if page index/page size not specified</returns>
+        public static IQueryable<TSource> ApplyPagination<TSource>(
+            this IQueryable<TSource> query,
+            IPaginated paginationOptions)
+        {
+            if (paginationOptions.PageIndex.HasValue &&
+                paginationOptions.PageIndex.Value >= 0 &&
+                paginationOptions.PageSize > 0)
+            {
+                return query
+                    .Skip(paginationOptions.PageIndex.Value * paginationOptions.PageSize)
+                    .Take(paginationOptions.PageSize);
+            }
+            else
+            {
+                return query;
+            }
+        }
+
+        /// <summary>
+        /// Apply to the query the list of orderby given in the orderBy parameter.
+        /// If the list is empty, apply a default sort order.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="filter"></param>
+        /// <param name="orderBy"></param>
+        /// <param name="defaultOrderBy"></param>
+        /// <returns></returns>
+        public static IOrderedQueryable<TSource> OrderBy<TSource>(
+            this IQueryable<TSource> query,
+            OrderByFilter<TSource> filter,
+            IEnumerable<OrderByOption> orderBy,
+            Func<IQueryable<TSource>,
+            IOrderedQueryable<TSource>> defaultOrderBy)
+                => filter.OrderBy(query, orderBy, defaultOrderBy);
     }
 
     public static class IRepositoryExtensions
