@@ -29,22 +29,22 @@ namespace APIBaseTemplate.Common
             catch (Exception ex)
             {
                 var logger = _loggerFactory.CreateLogger<ExceptionHandlingMiddleware>();
+                var distributedContextId = context.GetDistribuitedContextIdHeader();
+                var errorDescriptor = ErrorDescriptorHelper.FromException(ex, distributedContextId);
+                var errorParamsString = ErrorDescriptorHelper.GetExceptionPublicAndPrivateErrorCodeParameters(ex);
 
-                var distribuitedContextId = context.GetDistribuitedContextIdHeader();
-                var errorDescriptor = ErrorDescriptorHelper.FromException(ex, distribuitedContextId);
-                string errorParamsString = ErrorDescriptorHelper.GetExceptionPublicAndPrivateErrorCodeParameters(ex);
                 using (logger.BeginScope("Error while processing request {requestPath}", context.Request.Path))
                 {
-                    logger.LogError(ex, $"Error encountered|Message: '{ex.Message}'|Error parameters: {errorParamsString}|Distribuited context id: {distribuitedContextId}|Error descriptor: {errorDescriptor}");
+                    logger.LogError(ex, $"Error encountered|Message: '{ex.Message}'|Error parameters: {errorParamsString}|Distributed context id: {distributedContextId}|Error descriptor: {errorDescriptor}");
 
                     IActionResult result = new JsonResult(errorDescriptor)
                     {
                         StatusCode = ErrorDescriptorHelper.GetHttpStatusCode(ex)
                     };
 
-                    RouteData routeData = context.GetRouteData();
-                    ActionDescriptor actionDescriptor = new ActionDescriptor();
-                    ActionContext actionContext = new ActionContext(context, routeData, actionDescriptor);
+                    var routeData = context.GetRouteData();
+                    var actionDescriptor = new ActionDescriptor();
+                    var actionContext = new ActionContext(context, routeData, actionDescriptor);
 
                     await result.ExecuteResultAsync(actionContext);
                 }

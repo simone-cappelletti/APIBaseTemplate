@@ -22,6 +22,7 @@ namespace APIBaseTemplate.Services
             {
                 // Default attribute
                 action.Filters.Add(new ProducesResponseTypeAttribute((int)HttpStatusCode.InternalServerError));
+                action.Filters.Add(new ProducesResponseTypeAttribute((int)HttpStatusCode.BadRequest));
                 action.Filters.Add(new ProducesResponseTypeAttribute((int)HttpStatusCode.Unauthorized));
                 action.Filters.Add(new ProducesResponseTypeAttribute((int)HttpStatusCode.Forbidden));
                 action.Filters.Add(new ProducesResponseTypeAttribute((int)HttpStatusCode.OK));

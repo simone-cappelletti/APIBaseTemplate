@@ -21,7 +21,7 @@ namespace APIBaseTemplate.Repositories.UnitOfWork
         public TransactionScope Scope { get => _scope; }
 
         /// <summary>
-        /// Crea una Unit Of Work EF usando una connessione tramite Data Context
+        /// Create a unit of work using a connection via Data Context
         /// </summary>
         /// <param name="dataContext"></param>
         public UnitOfWork(IDataContext dataContext)

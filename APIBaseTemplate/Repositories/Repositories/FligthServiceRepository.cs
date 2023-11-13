@@ -67,8 +67,6 @@ namespace APIBaseTemplate.Repositories
                 return query;
             }
 
-            var sanitizeOptions = EnmSimpleTextFilterSanitize.RemovePercent | EnmSimpleTextFilterSanitize.Trim | EnmSimpleTextFilterSanitize.ToUpper;
-
             // FligthServiceId
             if (true == filters.FligthServiceId.HasValue)
             {

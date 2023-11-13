@@ -3,6 +3,7 @@ using APIBaseTemplate.Datamodel;
 using APIBaseTemplate.Repositories;
 using APIBaseTemplate.Repositories.DataContexts;
 using APIBaseTemplate.Repositories.UnitOfWork;
+using APIBaseTemplate.Services;
 using APIBaseTemplate.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -30,6 +31,9 @@ namespace APIBaseTemplate.Common
             serviceCollection.AddScoped(serviceProvider =>
             {
                 var db = serviceProvider.GetService<APIBaseTemplateDbContext>();
+
+                ArgumentNullException.ThrowIfNull(db);
+
                 var result = new DataContext(db);
                 return result;
             });
@@ -56,6 +60,34 @@ namespace APIBaseTemplate.Common
             });
 
             serviceCollection.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
+        }
+
+        /// <summary>
+        /// Add repositories.
+        /// </summary>
+        /// <param name="serviceCollection"></param>
+        public static void AddRepositories(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddScoped<ICityRepository, CityRepository>();
+            serviceCollection.AddScoped<IRegionRepository, RegionRepository>();
+            serviceCollection.AddScoped<IAirlineRepository, AirlineRepository>();
+            serviceCollection.AddScoped<IAirportRepository, AirportRepository>();
+            serviceCollection.AddScoped<IFligthRepository, FligthRepository>();
+            serviceCollection.AddScoped<IFligthServiceRepository, FligthServiceRepository>();
+        }
+
+        /// <summary>
+        /// Add business services.
+        /// </summary>
+        /// <param name="serviceCollection"></param>
+        public static void AddBusinessServices(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddScoped<ICityBusiness, CityBusiness>();
+            serviceCollection.AddScoped<IRegionBusiness, RegionBusiness>();
+            serviceCollection.AddScoped<IAirlineBusiness, AirlineBusiness>();
+            serviceCollection.AddScoped<IAirportBusiness, AirportBusiness>();
+            serviceCollection.AddScoped<IFligthBusiness, FligthBusiness>();
+            serviceCollection.AddScoped<IFligthServiceBusiness, FligthServiceBusiness>();
         }
 
         /// <summary>
