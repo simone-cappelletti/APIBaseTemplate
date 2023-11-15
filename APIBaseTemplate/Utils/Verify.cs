@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 namespace APIBaseTemplate.Utils
 {
@@ -140,7 +139,9 @@ namespace APIBaseTemplate.Utils
             string paramName = "")
         {
             if (maximumLength < 0)
+            {
                 throw new ArgumentException("Invalid maximum length", nameof(maximumLength));
+            }
 
             VerifyCondition(
                 string.IsNullOrEmpty(obj) ||

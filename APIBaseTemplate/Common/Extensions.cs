@@ -161,6 +161,7 @@ namespace APIBaseTemplate.Common
             {
                 throw new ArgumentNullException(nameof(verify));
             }
+
             verify.Satisfied(value.Kind == DateTimeKind.Unspecified,
                 assertValueMessage => new ArgumentException(
                 verify.NotOperatorEnabled ?
@@ -186,6 +187,7 @@ namespace APIBaseTemplate.Common
             {
                 throw new ArgumentNullException(nameof(verify));
             }
+
             verify.Satisfied(value.Kind == DateTimeKind.Utc,
                 assertValueMessage => new ArgumentException(
                 verify.NotOperatorEnabled ?
@@ -211,6 +213,7 @@ namespace APIBaseTemplate.Common
             {
                 throw new ArgumentNullException(nameof(verify));
             }
+
             verify.Satisfied(value > 0,
                 assertValueMessage => new ArgumentOutOfRangeException(valueMessage,
                 verify.NotOperatorEnabled ?
@@ -235,6 +238,7 @@ namespace APIBaseTemplate.Common
             {
                 throw new ArgumentNullException(nameof(verify));
             }
+
             verify.Satisfied(value < 0,
                 assertValueMessage => new ArgumentOutOfRangeException(valueMessage,
                 verify.NotOperatorEnabled ?
