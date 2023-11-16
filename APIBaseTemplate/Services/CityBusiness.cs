@@ -122,7 +122,12 @@ namespace APIBaseTemplate.Services
                     return result;
                 }
             }
-            catch (BaseException) { throw; }
+            catch (BaseException baseExc)
+            {
+                baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(city), city);
+
+                throw baseExc;
+            }
             catch (Exception ex)
             {
                 throw new CityException($"Unexpected error in {nameof(Create)}({city}): {ex.Message}", ex);
@@ -205,7 +210,12 @@ namespace APIBaseTemplate.Services
 
                 return result;
             }
-            catch (BaseException) { throw; }
+            catch (BaseException baseExc)
+            {
+                baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(request), request);
+
+                throw baseExc;
+            }
             catch (Exception ex)
             {
                 throw new BaseException($"Unexpected error in {nameof(Get)}: {ex.Message}", ex);

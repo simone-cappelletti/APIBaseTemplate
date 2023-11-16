@@ -152,7 +152,12 @@ namespace APIBaseTemplate.Services
                     return result;
                 }
             }
-            catch (BaseException) { throw; }
+            catch (BaseException baseExc)
+            {
+                baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(fligth), fligth);
+
+                throw baseExc;
+            }
             catch (Exception ex)
             {
                 throw new FligthException($"Unexpected error in {nameof(Create)}({fligth}): {ex.Message}", ex);
@@ -235,7 +240,12 @@ namespace APIBaseTemplate.Services
 
                 return result;
             }
-            catch (BaseException) { throw; }
+            catch (BaseException baseExc)
+            {
+                baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(request), request);
+
+                throw baseExc;
+            }
             catch (Exception ex)
             {
                 throw new BaseException($"Unexpected error in {nameof(Get)}: {ex.Message}", ex);
