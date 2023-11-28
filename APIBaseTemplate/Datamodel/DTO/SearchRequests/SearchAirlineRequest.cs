@@ -1,4 +1,5 @@
 ﻿using APIBaseTemplate.Common;
+using System.Text.Json.Serialization;
 
 namespace APIBaseTemplate.Datamodel.DTO
 {
@@ -13,7 +14,7 @@ namespace APIBaseTemplate.Datamodel.DTO
     /// <summary>
     /// Filters about <see cref="Airline"/> entity request
     /// </summary>
-    public class SearchAirlineFilters
+    public class SearchAirlineFilters : ISearchIdFilters
     {
         /// <summary>
         /// Search on <see cref="Airline.AirlineId"/>
@@ -34,6 +35,12 @@ namespace APIBaseTemplate.Datamodel.DTO
         /// Search on <see cref="Airline.RegionId"/>
         /// </summary>
         public int? RegionId { get; set; }
+
+        /// <inheritdoc/>
+        public IdListFilter IdList { get; set; }
+
+        /// <inheritdoc/>
+        public IdRangeFilter IdRange { get; set; }
     }
 
     /// <summary>

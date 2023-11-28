@@ -13,7 +13,7 @@ namespace APIBaseTemplate.Datamodel.DTO
     /// <summary>
     /// Filters about <see cref="Region"/> entity request
     /// </summary>
-    public class SearchRegionFilters
+    public class SearchRegionFilters : ISearchIdFilters
     {
         /// <summary>
         /// Search on <see cref="Region.RegionId"/>
@@ -24,6 +24,12 @@ namespace APIBaseTemplate.Datamodel.DTO
         /// Search on <see cref="Region.Name"/>
         /// </summary>
         public TextFilter? Name { get; set; }
+
+        /// <inheritdoc/>
+        public IdListFilter IdList { get; set; }
+
+        /// <inheritdoc/>
+        public IdRangeFilter IdRange { get; set; }
     }
 
     /// <summary>

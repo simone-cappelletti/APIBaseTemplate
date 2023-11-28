@@ -13,7 +13,7 @@ namespace APIBaseTemplate.Datamodel.DTO
     /// <summary>
     /// Filters about <see cref="FligthService"/> entity request
     /// </summary>
-    public class SearchFligthServiceFilters
+    public class SearchFligthServiceFilters : ISearchIdFilters
     {
         /// <summary>
         /// Search on <see cref="FligthService.FligthServiceId"/>
@@ -34,6 +34,12 @@ namespace APIBaseTemplate.Datamodel.DTO
         /// Search on <see cref="FligthService.FligthId"/>
         /// </summary>
         public int? FligthId { get; set; }
+
+        /// <inheritdoc/>
+        public IdListFilter IdList { get; set; }
+
+        /// <inheritdoc/>
+        public IdRangeFilter IdRange { get; set; }
     }
 
     /// <summary>

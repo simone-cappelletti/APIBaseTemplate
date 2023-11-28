@@ -113,6 +113,19 @@ namespace APIBaseTemplate.Repositories
                 query = query.Where(x => x.CityId == filters.CityId);
             }
 
+            // IdList
+            if (filters.IdList != null && !filters.IdList.IsEmpty())
+            {
+                var idList = filters.IdList.GetArrayIds();
+                query = query.Where(x => idList.Contains(x.AirportId));
+            }
+
+            // IdRange
+            if (filters.IdRange != null && filters.IdRange.IsValidRange())
+            {
+                query = query.Where(x => x.AirportId >= filters.IdRange.MinId && x.AirportId <= filters.IdRange.MaxId);
+            }
+
             return query;
         }
 

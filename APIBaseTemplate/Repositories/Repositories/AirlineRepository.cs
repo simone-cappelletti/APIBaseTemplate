@@ -111,6 +111,19 @@ namespace APIBaseTemplate.Repositories
                 query = query.Where(x => x.RegionId == filters.RegionId);
             }
 
+            // IdList
+            if (filters.IdList != null && !filters.IdList.IsEmpty())
+            {
+                var idList = filters.IdList.GetArrayIds();
+                query = query.Where(x => idList.Contains(x.AirlineId));
+            }
+
+            // IdRange
+            if (filters.IdRange != null && filters.IdRange.IsValidRange())
+            {
+                query = query.Where(x => x.AirlineId >= filters.IdRange.MinId && x.AirlineId <= filters.IdRange.MaxId);
+            }
+
             return query;
         }
 

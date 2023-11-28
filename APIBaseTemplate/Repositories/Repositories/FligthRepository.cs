@@ -165,6 +165,19 @@ namespace APIBaseTemplate.Repositories
                     inValues: null);
             }
 
+            // IdList
+            if (filters.IdList != null && !filters.IdList.IsEmpty())
+            {
+                var idList = filters.IdList.GetArrayIds();
+                query = query.Where(x => idList.Contains(x.FligthId));
+            }
+
+            // IdRange
+            if (filters.IdRange != null && filters.IdRange.IsValidRange())
+            {
+                query = query.Where(x => x.FligthId >= filters.IdRange.MinId && x.FligthId <= filters.IdRange.MaxId);
+            }
+
             return query;
         }
 

@@ -13,7 +13,7 @@ namespace APIBaseTemplate.Datamodel.DTO
     /// <summary>
     /// Filters about <see cref="Airport"/> entity request
     /// </summary>
-    public class SearchAirportFilters
+    public class SearchAirportFilters : ISearchIdFilters
     {
         /// <summary>
         /// Search on <see cref="Airport.AirportId"/>
@@ -34,6 +34,12 @@ namespace APIBaseTemplate.Datamodel.DTO
         /// Search on <see cref="Airport.CityId"/>
         /// </summary>
         public int? CityId { get; set; }
+
+        /// <inheritdoc/>
+        public IdListFilter IdList { get; set; }
+
+        /// <inheritdoc/>
+        public IdRangeFilter IdRange { get; set; }
     }
 
     /// <summary>

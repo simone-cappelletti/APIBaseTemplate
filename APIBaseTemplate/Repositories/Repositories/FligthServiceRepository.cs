@@ -92,6 +92,19 @@ namespace APIBaseTemplate.Repositories
                 query = query.Where(x => x.FligthId == filters.FligthId);
             }
 
+            // IdList
+            if (filters.IdList != null && !filters.IdList.IsEmpty())
+            {
+                var idList = filters.IdList.GetArrayIds();
+                query = query.Where(x => idList.Contains(x.FligthServiceId));
+            }
+
+            // IdRange
+            if (filters.IdRange != null && filters.IdRange.IsValidRange())
+            {
+                query = query.Where(x => x.FligthServiceId >= filters.IdRange.MinId && x.FligthServiceId <= filters.IdRange.MaxId);
+            }
+
             return query;
         }
 
