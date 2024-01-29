@@ -1,14 +1,14 @@
 # APIBaseTemplate
 ## :book: Introduction
-As written on my personal README page, **APIBaseTemplate** is a project that shows how I would go about structuring and managing a basic API for a project with no special requirements. So the project includes a little bit of all the common needs that I found myself dealing with over time, from database management, authentication, authorization, logging, and so on.
+As written on my personal README page, **APIBaseTemplate** is a project that shows how I would go about structuring and managing a basic API for a project with no special requirements. So the project includes a little bit of all the common needs that I found myself dealing with over time, from database management,dependency injection, logging, and so on...
 
 During development, I will document my decisions and try to understand the reasoning behind them.
 
-The basic idea is to "replicate" a sky scanner where users can compare and book their flights. I will not go vertical by adding one feature after the other to our flights, but I will go horizontal to integrate different areas of the API, like the already mentioned authentication, authorization, but also security etc. etc.
+The basic idea is to "replicate" a sky scanner where users can compare and book their flights. I will not go vertical by adding one feature after the other to our flights, but I will go horizontal to integrate different areas of the API like the already mentioned.
 
 ## :computer: Tech stack
 Let's start by talking about the technology stack that I want to integrate into the project - that is, into the API:
-- .NET 7 as framework.
+- .NET 8 as framework.
 - SQL Server database with Entity Framework in code first.
 
 ## :notebook_with_decorative_cover: Data layer
