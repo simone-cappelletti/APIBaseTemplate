@@ -126,7 +126,7 @@ namespace APIBaseTemplate.Services
             {
                 baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(city), city);
 
-                throw baseExc;
+                throw;
             }
             catch (Exception ex)
             {
@@ -165,7 +165,7 @@ namespace APIBaseTemplate.Services
             {
                 baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(cityId), cityId);
 
-                throw baseExc;
+                throw;
             }
             catch (Exception ex)
             {
@@ -214,7 +214,7 @@ namespace APIBaseTemplate.Services
             {
                 baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(request), request);
 
-                throw baseExc;
+                throw;
             }
             catch (Exception ex)
             {
@@ -256,7 +256,7 @@ namespace APIBaseTemplate.Services
             {
                 baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(cityId), cityId);
 
-                throw baseExc;
+                throw;
             }
             catch (Exception ex)
             {
@@ -333,7 +333,7 @@ namespace APIBaseTemplate.Services
             {
                 baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(city), city);
 
-                throw baseExc;
+                throw;
             }
             catch (Exception ex)
             {

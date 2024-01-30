@@ -130,7 +130,7 @@ namespace APIBaseTemplate.Services
             {
                 baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(airline), airline);
 
-                throw baseExc;
+                throw;
             }
             catch (Exception ex)
             {
@@ -169,7 +169,7 @@ namespace APIBaseTemplate.Services
             {
                 baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(airlineId), airlineId);
 
-                throw baseExc;
+                throw;
             }
             catch (Exception ex)
             {
@@ -218,7 +218,7 @@ namespace APIBaseTemplate.Services
             {
                 baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(request), request);
 
-                throw baseExc;
+                throw;
             }
             catch (Exception ex)
             {
@@ -260,7 +260,7 @@ namespace APIBaseTemplate.Services
             {
                 baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(airlineId), airlineId);
 
-                throw baseExc;
+                throw;
             }
             catch (Exception ex)
             {
@@ -337,7 +337,7 @@ namespace APIBaseTemplate.Services
             {
                 baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(airline), airline);
 
-                throw baseExc;
+                throw;
             }
             catch (Exception ex)
             {

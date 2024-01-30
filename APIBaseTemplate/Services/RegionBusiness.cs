@@ -117,7 +117,7 @@ namespace APIBaseTemplate.Services
             {
                 baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(region), region);
 
-                throw baseExc;
+                throw;
             }
             catch (Exception ex)
             {
@@ -156,7 +156,7 @@ namespace APIBaseTemplate.Services
             {
                 baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(regionId), regionId);
 
-                throw baseExc;
+                throw;
             }
             catch (Exception ex)
             {
@@ -205,7 +205,7 @@ namespace APIBaseTemplate.Services
             {
                 baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(request), request);
 
-                throw baseExc;
+                throw;
             }
             catch (Exception ex)
             {
@@ -247,7 +247,7 @@ namespace APIBaseTemplate.Services
             {
                 baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(regionId), regionId);
 
-                throw baseExc;
+                throw;
             }
             catch (Exception ex)
             {
@@ -318,7 +318,7 @@ namespace APIBaseTemplate.Services
             {
                 baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(region), region);
 
-                throw baseExc;
+                throw;
             }
             catch (Exception ex)
             {

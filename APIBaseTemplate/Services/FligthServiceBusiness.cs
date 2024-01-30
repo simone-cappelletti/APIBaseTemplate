@@ -135,7 +135,7 @@ namespace APIBaseTemplate.Services
             {
                 baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(fligthService), fligthService);
 
-                throw baseExc;
+                throw;
             }
             catch (Exception ex)
             {
@@ -174,7 +174,7 @@ namespace APIBaseTemplate.Services
             {
                 baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(fligthServiceId), fligthServiceId);
 
-                throw baseExc;
+                throw;
             }
             catch (Exception ex)
             {
@@ -223,7 +223,7 @@ namespace APIBaseTemplate.Services
             {
                 baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(request), request);
 
-                throw baseExc;
+                throw;
             }
             catch (Exception ex)
             {
@@ -265,7 +265,7 @@ namespace APIBaseTemplate.Services
             {
                 baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(fligthServiceId), fligthServiceId);
 
-                throw baseExc;
+                throw;
             }
             catch (Exception ex)
             {
@@ -336,7 +336,7 @@ namespace APIBaseTemplate.Services
             {
                 baseExc.PublicAndPrivateErrorCodeParameters.Add(nameof(fligthService), fligthService);
 
-                throw baseExc;
+                throw;
             }
             catch (Exception ex)
             {
